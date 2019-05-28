@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" prefHeight="602.0" prefWidth="797.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.venda.FXMLVendaController">
+   <children>
+      <AnchorPane layoutY="90.0" prefHeight="101.0" prefWidth="798.0" style="-fx-background-color: #4d2389;">
+         <children>
+            <Label layoutX="371.0" layoutY="33.0" prefHeight="35.0" prefWidth="72.0" text="Venda" textFill="WHITE">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Label>
+         </children>
+      </AnchorPane>
+      <Label layoutX="14.0" layoutY="58.0" text="Gerencie sua loja com simplicidade" textFill="#908181" />
+      <TableView fx:id="tabelaProduto" layoutX="34.0" layoutY="363.0" prefHeight="50.0" prefWidth="623.0">
+        <columns>
+          <TableColumn fx:id="codigo" prefWidth="80.99998474121094" text="Código" />
+          <TableColumn fx:id="descricao" prefWidth="373.0" text="Descrição" />
+            <TableColumn fx:id="quantidade" prefWidth="83.0" text="Quantidade" />
+            <TableColumn fx:id="valor" prefWidth="84.0" text="Valor" />
+        </columns>
+      </TableView>
+      <JFXButton layoutX="676.0" layoutY="323.0" mnemonicParsing="false" onAction="#limparCarrinho" style="-fx-background-color: #4d2389;" text="Limpar carrinho" textFill="WHITE" />
+      <JFXButton layoutX="694.0" layoutY="277.0" mnemonicParsing="false" onAction="#removerDoCarrinho" style="-fx-background-color: #4d2389;" text="Remover" textFill="WHITE" />
+      <JFXButton layoutX="693.0" layoutY="232.0" mnemonicParsing="false" onAction="#adicionarAoCarrinho" style="-fx-background-color: #4d2389;" text="Adicionar" textFill="WHITE" />
+      <Label layoutX="34.0" layoutY="205.0" text="Carrinho produtos">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Label>
+      <Label layoutX="34.0" layoutY="432.0" text="Código do produto" />
+      <TextField fx:id="codigoProduto" layoutX="144.0" layoutY="429.0" prefHeight="25.0" prefWidth="49.0" />
+      <TextArea fx:id="descricaoVenda" layoutX="34.0" layoutY="499.0" prefHeight="68.0" prefWidth="202.0" />
+      <Label layoutX="34.0" layoutY="476.0" text="Descrição da venda" />
+      <JFXComboBox fx:id="buscar" focusColor="#4d2389" layoutX="475.0" layoutY="447.0" onAction="#habilitarBotaoBuscarCliente" prefHeight="25.0" prefWidth="83.0" />
+      <TextField fx:id="buscarCliente" layoutX="331.0" layoutY="451.0" prefHeight="25.0" prefWidth="137.0" />
+      <Label layoutX="477.0" layoutY="427.0" text="Buscar por:" />
+      <ImageView fitHeight="25.0" fitWidth="26.0" layoutX="299.0" layoutY="452.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../imagens/icons8-search-filled-50.png" />
+         </image>
+      </ImageView>
+      <TableView fx:id="tabelaCliente" layoutX="299.0" layoutY="499.0" prefHeight="68.0" prefWidth="320.0">
+        <columns>
+          <TableColumn fx:id="nome" prefWidth="157.0" text="Nome" />
+          <TableColumn fx:id="cpf" prefWidth="161.0" text="CPF" />
+        </columns>
+      </TableView>
+      <Label layoutX="626.0" layoutY="499.0" prefHeight="32.0" prefWidth="89.0" text="Valor total:" textFill="#31a770">
+         <font>
+            <Font size="18.0" />
+         </font></Label>
+      <JFXButton fx:id="botaoBuscarProduto" layoutX="204.0" layoutY="428.0" mnemonicParsing="false" onAction="#buscarProduto" style="-fx-background-color: #4d2389;" text="Buscar" textFill="WHITE" />
+      <JFXButton fx:id="botaoBuscarCliente" layoutX="566.0" layoutY="451.0" mnemonicParsing="false" onAction="#buscarCliente" style="-fx-background-color: #4d2389;" text="Buscar" textFill="WHITE" />
+      <JFXComboBox fx:id="pagamento" focusColor="#4d2389" layoutX="665.0" layoutY="451.0" prefHeight="25.0" prefWidth="115.0" />
+      <Label layoutX="664.0" layoutY="432.0" text="Forma de pagamento:" />
+      <TableView fx:id="tabelaCarrinho" layoutX="34.0" layoutY="232.0" prefHeight="116.0" prefWidth="623.0">
+         <columns>
+            <TableColumn fx:id="codigoCarrinho" prefWidth="80.99998474121094" text="Código" />
+            <TableColumn fx:id="descricaoCarrinho" prefWidth="455.0" text="Descrição" />
+            <TableColumn fx:id="valorCarrinho" prefWidth="85.0" text="Valor" />
+         </columns>
+      </TableView>
+      <Label fx:id="vendaRealizada" layoutX="621.0" layoutY="577.0" prefHeight="17.0" prefWidth="171.0" textFill="#31a770">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font></Label>
+      <Label fx:id="valorTotal" layoutX="716.0" layoutY="502.0" prefHeight="25.0" prefWidth="72.0" textFill="#31a770">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <JFXButton layoutX="658.0" layoutY="543.0" mnemonicParsing="false" onAction="#realizarVenda" style="-fx-background-color: #4d2389;" text="Realizar Venda" textFill="WHITE" />
+   </children>
+</AnchorPane>
