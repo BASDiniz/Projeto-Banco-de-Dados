@@ -9,8 +9,8 @@ import java.util.ArrayList;
 import java.util.Calendar;
 
 /**
- * Esta classe realizar operações CRUD com objetos do tipo Venda.
- * @author Éverton Vieira
+ * Esta classe realizar operaï¿½ï¿½es CRUD com objetos do tipo Venda.
+ * @author ï¿½verton Vieira
  * @author Bruno Diniz
  * @version 2.00
  */
@@ -101,7 +101,15 @@ public class RepositorioVenda implements IRepositorioVenda, Serializable {
         return clienteFiel;
     }
 
-    //Método auxiliar que busca os produtos que já foram vendidos em alguma venda
+    public ArrayList<Venda> returnAllVendas(){
+        ArrayList<Venda> retorno = new ArrayList<Venda>();
+        for (Venda item:this.listaVendas) {
+            retorno.add(item);
+        }
+        return retorno;
+    }
+
+    //Mï¿½todo auxiliar que busca os produtos que jï¿½ foram vendidos em alguma venda
 
     private ArrayList<Produto> buscarProdutosVendidos() {
 
@@ -120,7 +128,7 @@ public class RepositorioVenda implements IRepositorioVenda, Serializable {
     }
 
     /**
-     * Esse método busca quais foram os produtos mais vendidos em determinado mês.
+     * Esse mï¿½todo busca quais foram os produtos mais vendidos em determinado mï¿½s.
      * @param mes
      * @return retorna um ArrayList de produtos
      */

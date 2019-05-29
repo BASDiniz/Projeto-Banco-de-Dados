@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Spinner?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" prefHeight="602.0" prefWidth="797.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.produto.editarProduto.EditarProdutoController">
+   <children>
+      <AnchorPane prefHeight="106.0" prefWidth="799.0" style="-fx-background-color: #825106;">
+         <children>
+            <Label layoutX="325.0" layoutY="36.0" prefHeight="35.0" prefWidth="173.0" text="Alterar Produto" textFill="WHITE">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Label>
+         </children>
+      </AnchorPane>
+      <TextField fx:id="codigo" layoutX="523.0" layoutY="174.0" />
+      <Label layoutX="523.0" layoutY="152.0" text="Código" />
+      <Label layoutX="57.0" layoutY="273.0" text="Tipo de Roupa" />
+      <TextField fx:id="cor" layoutX="451.0" layoutY="373.0" />
+      <Label layoutX="249.0" layoutY="349.0" prefHeight="17.0" prefWidth="111.0" text="Faixa Etária" />
+      <Label layoutX="52.0" layoutY="350.0" text="Gênero" />
+      <Label layoutX="456.0" layoutY="351.0" text="Cor" />
+      <JFXButton fx:id="botaoAlterar" layoutX="455.0" layoutY="501.0" onAction="#alterarProduto" prefHeight="25.0" prefWidth="62.0" style="-fx-background-color: #825106;" text="Alterar" textFill="WHITE" />
+      <Label fx:id="mensagem" layoutX="406.0" layoutY="538.0" prefHeight="17.0" prefWidth="160.0" textFill="#31a770">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font></Label>
+      <AnchorPane layoutX="49.0" layoutY="246.0" prefHeight="1.0" prefWidth="630.0" style="-fx-background-color: #908181;" />
+      <TextField fx:id="descricaoDoProduto" layoutX="49.0" layoutY="174.0" prefHeight="25.0" prefWidth="437.0" />
+      <Label layoutX="57.0" layoutY="152.0" text="Descrição do Produto" />
+      <Label layoutX="250.0" layoutY="271.0" text="Tamanho" />
+      <Label layoutX="450.0" layoutY="271.0" text="Categoria" />
+      <Label layoutX="60.0" layoutY="479.0" text="Quantidade" />
+      <Label layoutX="254.0" layoutY="480.0" text="Valor" />
+      <TextField fx:id="valor" layoutX="250.0" layoutY="501.0" />
+      <AnchorPane layoutX="49.0" layoutY="452.0" prefHeight="1.0" prefWidth="630.0" style="-fx-background-color: #908181;" />
+      <ImageView fitHeight="25.0" fitWidth="28.0" layoutX="17.0" layoutY="259.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../imagens/icons8-socks-24.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="25.0" fitWidth="28.0" layoutX="17.0" layoutY="462.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../imagens/icons8-tags-24.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="25.0" fitWidth="28.0" layoutX="20.0" layoutY="145.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../imagens/icons8-font-style-formatting-30.png" />
+         </image>
+      </ImageView>
+      <JFXButton layoutX="652.0" layoutY="501.0" onAction="#removerProduto" prefHeight="25.0" prefWidth="72.0" style="-fx-background-color: #d00606;" text="Remover" textFill="WHITE" />
+      <JFXComboBox fx:id="genero" focusColor="#825106" layoutX="52.0" layoutY="374.0" prefHeight="25.0" prefWidth="150.0" />
+      <JFXComboBox fx:id="tipoDeRoupa" focusColor="#825106" layoutX="52.0" layoutY="293.0" prefHeight="25.0" prefWidth="150.0" />
+      <JFXComboBox fx:id="tamanho" focusColor="#825106" layoutX="249.0" layoutY="293.0" prefHeight="25.0" prefWidth="150.0" />
+      <JFXComboBox fx:id="faixaEtaria" focusColor="#825106" layoutX="249.0" layoutY="374.0" prefHeight="25.0" prefWidth="150.0" />
+      <JFXComboBox fx:id="categoria" focusColor="#825106" layoutX="448.0" layoutY="293.0" prefHeight="25.0" prefWidth="150.0" />
+      <Spinner fx:id="quantidade" layoutX="60.0" layoutY="501.0" prefHeight="25.0" prefWidth="127.0" />
+      <Label fx:id="mensagemRemovido" layoutX="640.0" layoutY="538.0" prefHeight="17.0" prefWidth="98.0" textFill="#d00606" />
+   </children>
+</AnchorPane>

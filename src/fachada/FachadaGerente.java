@@ -3,6 +3,7 @@ package fachada;
 import negocio.entidade.Cliente;
 import negocio.entidade.Contato;
 import negocio.entidade.Funcionario;
+import negocio.entidade.Venda;
 import negocio.excecao.cliente.ClienteAtivoException;
 import negocio.excecao.cliente.ClienteNaoEncontradoException;
 import negocio.excecao.cliente.DadosInvalidosException;
@@ -58,6 +59,16 @@ public class FachadaGerente {
             FuncionarioInativoException {
 
         return this.fachadaGerente.getNegocioFuncionario().buscarPorCpf(cpf);
+    }
+
+    /**Metodo que retorna as vendas, para fazer o historico de vendas
+     * necessita apenas formatar as vendas pra printar na tela
+     *
+     * @author Erik Jhonatta
+     * @return retorna um arraylist
+     */
+    public ArrayList<Venda> historicoVendas(){
+        return this.fachadaGerente.getRepositorioVenda().returnAllVendas();
     }
 
 

@@ -323,8 +323,8 @@ public class FachadaFuncionario{
             throws CarrinhoVazioException, ClienteNaoEncontradoException, ContatoInvalidoException, ClienteNegadoException, DadosInvalidosException,
             ProdutoQuantidadeInsuficienteException, ClienteInativoException {
 
-        Funcionario funcionario = NegocioFuncionario.funcionarioLogado;
-        Cliente cliente = buscarPorCpf(cpf);
+        Funcionario funcionario = NegocioFuncionario.funcionarioLogado; // retorna o funcionario que ta logado e fazendo a venda
+        Cliente cliente = buscarPorCpf(cpf); // retorna o cliente que ta comprando
         Venda venda;
 
         if(descricao != null){
