@@ -6,6 +6,14 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
+import negocio.entidade.Cliente;
+import negocio.entidade.Contato;
+import negocio.entidade.Funcionario;
+import fachada.FachadaGerente;
+import negocio.excecao.cliente.DadosInvalidosException;
+import negocio.excecao.cliente.contato.ContatoInvalidoException;
+import negocio.excecao.cliente.funcionario.FuncionarioJaCadastradoException;
+import negocio.excecao.cliente.funcionario.GerenteJaCadastradoException;
 
 public class Main extends Application {
 
@@ -20,7 +28,8 @@ public class Main extends Application {
         stage.show();
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws FuncionarioJaCadastradoException, DadosInvalidosException, ContatoInvalidoException, GerenteJaCadastradoException {
+        //FachadaGerente.getInstance().adicionarFuncionario("Bruno Diniz", "11111111111", "12312312312", "12312312312", "bruno@gmail.com", "123123", 800, true);
         launch(args);
     }
 }

@@ -72,6 +72,7 @@ public class RepositorioVenda implements IRepositorioVenda, Serializable {
                 funcDoMes = listaVendas.get(i).getFuncionario();
             }
         }
+        funcDoMes.setFuncDoMes(true);
         return funcDoMes;
     }
 
