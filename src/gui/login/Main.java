@@ -29,7 +29,7 @@ public class Main extends Application {
     }
 
     public static void main(String[] args) throws FuncionarioJaCadastradoException, DadosInvalidosException, ContatoInvalidoException, GerenteJaCadastradoException {
-        //FachadaGerente.getInstance().adicionarFuncionario("Bruno Diniz", "11111111111", "12312312312", "12312312312", "bruno@gmail.com", "123123", 800, true);
+        FachadaGerente.getInstance().adicionarFuncionario("Bruno Diniz", "11111111111", "12312312312", "12312312312", "bruno@gmail.com", "123123", 800, true);
         launch(args);
     }
 }

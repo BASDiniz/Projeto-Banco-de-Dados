@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="602.0" prefWidth="797.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.venda.FXMLVendaController">
+<AnchorPane id="AnchorPane" prefHeight="602.0" prefWidth="797.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.venda.FXMLVendaController">
    <children>
       <AnchorPane layoutY="90.0" prefHeight="101.0" prefWidth="798.0" style="-fx-background-color: #4d2389;">
          <children>
@@ -58,9 +58,9 @@
           <TableColumn fx:id="cpf" prefWidth="161.0" text="CPF" />
         </columns>
       </TableView>
-      <Label layoutX="626.0" layoutY="499.0" prefHeight="32.0" prefWidth="89.0" text="Valor total:" textFill="#31a770">
+      <Label layoutX="626.0" layoutY="499.0" prefHeight="32.0" prefWidth="95.0" text="Valor total: R$" textFill="#31a770">
          <font>
-            <Font size="18.0" />
+            <Font size="15.0" />
          </font></Label>
       <JFXButton fx:id="botaoBuscarProduto" layoutX="204.0" layoutY="428.0" mnemonicParsing="false" onAction="#buscarProduto" style="-fx-background-color: #4d2389;" text="Buscar" textFill="WHITE" />
       <JFXButton fx:id="botaoBuscarCliente" layoutX="566.0" layoutY="451.0" mnemonicParsing="false" onAction="#buscarCliente" style="-fx-background-color: #4d2389;" text="Buscar" textFill="WHITE" />
@@ -77,7 +77,7 @@
          <font>
             <Font name="System Bold" size="12.0" />
          </font></Label>
-      <Label fx:id="valorTotal" layoutX="716.0" layoutY="502.0" prefHeight="25.0" prefWidth="72.0" textFill="#31a770">
+      <Label fx:id="valorTotal" layoutX="721.0" layoutY="502.0" prefHeight="25.0" prefWidth="72.0" textFill="#31a770">
          <font>
             <Font size="18.0" />
          </font>
