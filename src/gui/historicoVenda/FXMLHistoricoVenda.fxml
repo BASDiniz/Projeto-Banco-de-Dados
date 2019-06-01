@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="602.0" prefWidth="797.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.historicoVenda.FXMLHistoricoVendaController">
+   <children>
+      <AnchorPane layoutY="90.0" prefHeight="101.0" prefWidth="798.0" style="-fx-background-color: purple;">
+         <children>
+            <Label layoutX="279.0" layoutY="33.0" prefHeight="35.0" prefWidth="240.0" text="Histórico de Vendas" textFill="WHITE">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Label>
+         </children></AnchorPane>
+      <TableView fx:id="tabela" layoutX="27.0" layoutY="241.0" prefHeight="273.0" prefWidth="746.0">
+         <columns>
+            <TableColumn fx:id="nome" prefWidth="45.0" text="Código" />
+            <TableColumn fx:id="cpf" prefWidth="101.0" text="CPF Funcionário" />
+            <TableColumn fx:id="telefonePrincipal" prefWidth="103.0" text="CPF Cliente" />
+            <TableColumn fx:id="telefoneAlternativo" prefWidth="95.0" text="Data de Venda" />
+            <TableColumn fx:id="email" prefWidth="236.0" text="Carrinho de Venda" />
+            <TableColumn fx:id="ativo" prefWidth="85.0" text="Parcelado" />
+            <TableColumn fx:id="nome1" text="Valor" />
+         </columns>
+      </TableView>
+      <JFXButton fx:id="botaoBuscar" layoutX="354.0" layoutY="535.0" prefHeight="29.0" prefWidth="91.0" style="-fx-background-color: purple;" text="Buscar" textFill="WHITE">
+         <font>
+            <Font size="13.0" />
+         </font>
+      </JFXButton>
+   </children>
+</AnchorPane>
