@@ -12,7 +12,7 @@ import repositorio.RepositorioVenda;
 import java.util.ArrayList;
 
 /**
- * Classe de negï¿½cio Funcionario
+ * Classe de negócio Funcionario
  */
 public class NegocioFuncionario {
 
@@ -26,7 +26,7 @@ public class NegocioFuncionario {
     }
 
     /**
-     * Mï¿½todo para adicionar um funcionï¿½rio
+     * Método para adicionar um funcionário
      * @param funcionario
      * @throws DadosInvalidosException
      * @throws ContatoInvalidoException
@@ -56,7 +56,7 @@ public class NegocioFuncionario {
     }
 
     /**
-     * Mï¿½todo para listar todos os funcionï¿½rios com um determinado nome
+     * Método para listar todos os funcionários com um determinado nome
      * @param nome
      * @return retorna ArrayList com todos os funcionario encontrados
      * @throws FuncionarioNaoEncontradoException
@@ -71,16 +71,8 @@ public class NegocioFuncionario {
         }
     }
 
-    public ArrayList<Cliente> listarTodosOsFuncionarios(){
-        ArrayList<Cliente> todosFuncs = this.repositorioCliente.listarTodosOsFuncionarios();
-        if(todosFuncs.size() > 0){
-            return todosFuncs;
-        }
-        return null;
-    }
-
     /**
-     * Mï¿½todo para alterar um funcionï¿½rio
+     * Método para alterar um funcionário
      * @param funcionario
      * @throws FuncionarioNaoCadastradoException
      * @throws GerenteJaCadastradoException
@@ -110,7 +102,7 @@ public class NegocioFuncionario {
     }
 
     /**
-     * Mï¿½todo para desabilitar um funcionï¿½rio
+     * Método para desabilitar um funcionário
      * @param cliente
      * @param repositorioVenda
      * @throws FuncionarioNaoCadastradoException
@@ -134,7 +126,7 @@ public class NegocioFuncionario {
     }
 
     /**
-     * Mï¿½todo para habilitar um funcionï¿½rio
+     * Método para habilitar um funcionário
      * @param cliente
      * @throws FuncionarioNaoCadastradoException
      */
@@ -152,9 +144,9 @@ public class NegocioFuncionario {
 
 
     /**
-     * Mï¿½todo para buscar um funcionï¿½rio pelo seu CPF
+     * Método para buscar um funcionário pelo seu CPF
      * @param cpf
-     * @return retorna o funcionï¿½rio encontrado
+     * @return retorna o funcionário encontrado
      * @throws FuncionarioNaoCadastradoException
      * @throws FuncionarioInativoException
      */
@@ -180,10 +172,10 @@ public class NegocioFuncionario {
     }
 
     /**
-     * Mï¿½todo para efetuar o login no sistema
+     * Método para efetuar o login no sistema
      * @param cpf
      * @param senha
-     * @return returna o funcionï¿½rio logado
+     * @return returna o funcionário logado
      * @throws FuncionarioNaoCadastradoException
      * @throws SenhaIncorretaException
      * @throws FuncionarioInativoException
@@ -201,14 +193,14 @@ public class NegocioFuncionario {
     }
 
     /**
-     * Mï¿½todo para salvar os dados do repositorioCliente
+     * Método para salvar os dados do repositorioCliente
      */
     public void salvarDados(){
         this.repositorioCliente.salvarDados();
     }
 
     /**
-     * Mï¿½todo para fazer a leitura dos dados do repositorioCliente
+     * Método para fazer a leitura dos dados do repositorioCliente
      */
     public void lerDados(){
         this.repositorioCliente.lerDados();

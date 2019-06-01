@@ -109,10 +109,6 @@ public class FachadaGerente {
         return this.getFachadaGerente().getNegocioFuncionario().listarPorNomeFuncionario(nome);
     }
 
-    public ArrayList<Cliente> listarTodosOsFuncionarios(){
-        return this.getFachadaGerente().getNegocioFuncionario().listarTodosOsFuncionarios();
-    }
-
     /**
      * M?todo para alterar um funcion?rio
      * @param nome

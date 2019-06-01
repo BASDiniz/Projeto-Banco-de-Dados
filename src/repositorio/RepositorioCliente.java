@@ -6,11 +6,10 @@ import java.util.ArrayList;
 import interfaces.IRepositorioCliente;
 import negocio.entidade.Cliente;
 import negocio.entidade.Funcionario;
-import negocio.NegocioVenda;
 
 /**
  * Esta classe manipula? e armazena objetos do tipo cliente.
- * @author ï¿½verton Vieira
+ * @author Éverton Vieira
  * @version 2.00
  */
 public class RepositorioCliente implements IRepositorioCliente, Serializable{
@@ -67,6 +66,7 @@ public class RepositorioCliente implements IRepositorioCliente, Serializable{
 
     @Override
     public ArrayList<Cliente> listarPorNomeCliente(String nome) {
+
         ArrayList<Cliente> clientesEncontrados = new ArrayList<Cliente>();
 
         for(int i = 0; i < this.listaClientes.size(); i++) {
@@ -91,19 +91,6 @@ public class RepositorioCliente implements IRepositorioCliente, Serializable{
             }
         }
         return funcionariosEncontrados;
-    }
-
-    @Override
-    public ArrayList<Cliente> listarTodosOsFuncionarios(){
-        ArrayList<Cliente> funcionarios = new ArrayList<Cliente>();
-
-        for(int i = 0; i < this.listaClientes.size(); i++){
-            if(this.listaClientes.get(i) instanceof Funcionario){
-                funcionarios.add(this.listaClientes.get(i));
-
-            }
-        }
-        return funcionarios;
     }
 
     @Override

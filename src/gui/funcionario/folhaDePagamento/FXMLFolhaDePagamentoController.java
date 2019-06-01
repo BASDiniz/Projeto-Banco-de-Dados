@@ -69,8 +69,8 @@ public class FXMLFolhaDePagamentoController implements Initializable {
 
 
         FachadaGerente fachada = FachadaGerente.getInstance();
-        ArrayList<Cliente> listaDeClientes = fachada.listarTodosOsFuncionarios();
-        this.tabela.setItems(FXCollections.observableArrayList(listaDeClientes));
+        //ArrayList<Cliente> listaDeClientes = fachada.listarTodosOsFuncionarios();
+        //this.tabela.setItems(FXCollections.observableArrayList(listaDeClientes));
 
     }
 }
