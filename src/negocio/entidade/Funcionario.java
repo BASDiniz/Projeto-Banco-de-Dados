@@ -35,7 +35,7 @@ public class Funcionario extends Cliente implements Serializable{
         this.salario = salario;
         this.cargoGerente = cargoGerente;
         this.funcDoMes = false;
-        this.salarioComBonificacao = salario;
+        this.salarioComBonificacao = 0.0;
     }
 
     //M?todos Getters e Setters
@@ -104,7 +104,7 @@ public class Funcionario extends Cliente implements Serializable{
      */
     public void bonificar(){
         double bonus = this.salario * 0.05;
-        this.salarioComBonificacao = this.salario + bonus;
+        this.salario += bonus;
     }
 
     /**
@@ -134,7 +134,7 @@ public class Funcionario extends Cliente implements Serializable{
      */
     @Override
     public String toString(){
-        return super.toString() + "\n" + "Senha: " + this.senha + "\nSal?rio: R$" + this.salario + "\nSalario com bonificação: R$" + this.salarioComBonificacao
+        return super.toString() + "\n" + "Senha: " + this.senha + "\nSal?rio: R$" + this.salario
                 + "\nCargoGerente: " + this.cargoGerente + "\n";
     }
 }

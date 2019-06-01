@@ -5,33 +5,33 @@ import java.util.ArrayList;
 
 public interface IRepositorioCliente {
     /**
-     * Esse mï¿½todo verifica se o cliente existe no repositï¿½rio.
+     * Esse método verifica se o cliente existe no repositório.
      * @param cliente
-     * @return a posiï¿½ï¿½o(ï¿½ndice) do cliente no repositï¿½rio?.
+     * @return a posição(índice) do cliente no repositório?.
      */
     int procurarCliente(Cliente cliente);
 
     /**
-     * Mï¿½todo que adiciona um cliente na lista de clientes.
+     * Método que adiciona um cliente na lista de clientes.
      * @param cliente
      */
     void adicionarCliente(Cliente cliente);
 
     /**
-     * Mï¿½todo que altera um cliente antigo passando um novo como argumento.
+     * Método que altera um cliente antigo passando um novo como argumento.
      * @param cliente
      * @param indiceCliente
      */
     void alterarCliente(Cliente cliente, int indiceCliente);
 
     /**
-     * Mï¿½todo que desabilita um cliente da lista de clientes.
+     * Método que desabilita um cliente da lista de clientes.
      * @param indiceCliente
      */
     void desabilitarCliente(int indiceCliente);
 
     /**
-     * Mï¿½todo que habilita um cliente da lista de clientes.
+     * Método que habilita um cliente da lista de clientes.
      * @param indiceCliente
      */
     void habilitarCliente(int indiceCliente);
@@ -41,15 +41,13 @@ public interface IRepositorioCliente {
     Cliente buscarPorCpf(String cpf);
 
     /**
-     * Lista todos os clientes que comeï¿½am com o nome passado como parï¿½metro
+     * Lista todos os clientes que começam com o nome passado como parâmetro
      * @param nome
      * @return retorna um ArrayList de cliente
      */
     ArrayList<Cliente> listarPorNomeCliente(String nome);
 
     ArrayList<Cliente> listarPorNomeFuncionario(String nome);
-
-    ArrayList<Cliente> listarTodosOsFuncionarios();
 
     void salvarDados();
 
