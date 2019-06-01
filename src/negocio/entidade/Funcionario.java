@@ -16,6 +16,8 @@ public class Funcionario extends Cliente implements Serializable{
     private String senha;
     private double salario;
     private boolean cargoGerente;
+    private boolean funcDoMes;
+    private double salarioComBonificacao;
 
     /**
      * Construtor Funcionario
@@ -32,9 +34,27 @@ public class Funcionario extends Cliente implements Serializable{
         this.senha = senha;
         this.salario = salario;
         this.cargoGerente = cargoGerente;
+        this.funcDoMes = false;
+        this.salarioComBonificacao = 0.0;
     }
 
     //M?todos Getters e Setters
+
+    public boolean getFuncDoMes(){
+        return this.funcDoMes;
+    }
+
+    public void setFuncDoMes(boolean funcDoMes){
+        this.funcDoMes = funcDoMes;
+    }
+
+    public double getSalarioComBonificacao(){
+        return this.salarioComBonificacao;
+    }
+
+    public void setSalarioComBonificacao(double salarioComBonificacao){
+        this.salarioComBonificacao = salarioComBonificacao;
+    }
 
     public String getSenha(){
         return this.senha;
