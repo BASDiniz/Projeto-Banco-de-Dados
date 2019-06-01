@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
 <?import javafx.scene.image.Image?>
@@ -19,6 +19,8 @@
       <JFXButton fx:id="buttonLucro" buttonType="RAISED" layoutX="10.0" layoutY="406.0" onAction="#carregarTelaLucro" prefHeight="55.0" prefWidth="186.0" ripplerFill="#d4a21b" style="-fx-background-color: #f1f1f1;" text="Lucro" />
       <JFXButton buttonType="RAISED" layoutX="10.0" layoutY="366.0" onAction="#carregarTelaHistoricoVenda" prefHeight="55.0" prefWidth="185.0" ripplerFill="#d4a21b" style="-fx-background-color: #f1f1f1;" text="Histórico de vendas" />
       <JFXButton buttonType="RAISED" layoutX="10.0" layoutY="216.0" prefHeight="55.0" prefWidth="185.0" ripplerFill="#d4a21b" style="-fx-background-color: #f1f1f1;" text="Folha de pagamento" />
+      <JFXButton buttonType="RAISED" layoutX="10.0" layoutY="366.0" prefHeight="55.0" prefWidth="185.0" ripplerFill="#d4a21b" style="-fx-background-color: #f1f1f1;" text="Histórico de vendas" />
+      <JFXButton fx:id="buttonFolhaDePagamento" buttonType="RAISED" layoutX="10.0" layoutY="216.0" onAction="#carregarTelaFolhaDePagamento" prefHeight="55.0" prefWidth="185.0" ripplerFill="#d4a21b" style="-fx-background-color: #f1f1f1;" text="Folha de pagamento" />
       <JFXButton buttonType="RAISED" layoutX="10.0" layoutY="416.0" prefHeight="55.0" prefWidth="185.0" ripplerFill="#d4a21b" style="-fx-background-color: #f1f1f1;" text="Histórico de Fidelidade" />
       <JFXButton fx:id="buttonSalvarESair" buttonType="RAISED" layoutX="10.0" layoutY="488.0" onAction="#salvarESair" prefHeight="55.0" prefWidth="186.0" ripplerFill="#d4a21b" style="-fx-background-color: #d4a21b;" text="Salvar e sair" textFill="WHITE" />
    </children>

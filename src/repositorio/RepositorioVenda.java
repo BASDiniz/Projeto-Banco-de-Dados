@@ -59,20 +59,27 @@ public class RepositorioVenda implements IRepositorioVenda, Serializable {
         int quantidadeDeVendas = 0;
         int maiorQuantidadeDeVendas = 0;
         Funcionario funcDoMes = null;
-        for (int i = 0; i < listaVendas.size(); i++) {
-            maiorQuantidadeDeVendas = 0;
-            for (int j = 0; j < listaVendas.size(); j++) {
-                if (listaVendas.get(i).getFuncionario().equals(listaVendas.get(j).getFuncionario())
-                        && (listaVendas.get(i).getDataDeVenda().get(Calendar.MONTH) + 1) == mes) {
-                    maiorQuantidadeDeVendas++;
+
+        if(listaVendas.size() > 0) {
+
+            for (int i = 0; i < listaVendas.size(); i++) {
+                maiorQuantidadeDeVendas = 0;
+                for (int j = 0; j < listaVendas.size(); j++) {
+                    if (listaVendas.get(i).getFuncionario().equals(listaVendas.get(j).getFuncionario())
+                            && (listaVendas.get(i).getDataDeVenda().get(Calendar.MONTH) + 1) == mes) {
+                        maiorQuantidadeDeVendas++;
+                    }
+                }
+                if (maiorQuantidadeDeVendas > quantidadeDeVendas) {
+                    quantidadeDeVendas = maiorQuantidadeDeVendas;
+                    funcDoMes = listaVendas.get(i).getFuncionario();
                 }
             }
-            if (maiorQuantidadeDeVendas > quantidadeDeVendas) {
-                quantidadeDeVendas = maiorQuantidadeDeVendas;
-                funcDoMes = listaVendas.get(i).getFuncionario();
-            }
         }
-        funcDoMes.setFuncDoMes(true);
+
+        if (funcDoMes != null){
+            funcDoMes.setFuncDoMes(true);
+        }
         return funcDoMes;
     }
 
