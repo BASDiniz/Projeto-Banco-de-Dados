@@ -97,7 +97,7 @@ public class FXMLVendaController implements Initializable {
         this.carrinhoProdutos = new ArrayList<Produto>();
 
         this.buscar.setItems(FXCollections.observableArrayList("CPF", "Nome"));
-        this.pagamento.setItems(FXCollections.observableArrayList("À vista", "Parcelado"));
+        this.pagamento.setItems(FXCollections.observableArrayList("ï¿½ vista", "Parcelado"));
 
         this.codigoCarrinho.setCellValueFactory(new PropertyValueFactory<Produto, String>("codigo"));
         this.descricaoCarrinho.setCellValueFactory(new PropertyValueFactory<Produto, String>("descricaoDoProduto"));
@@ -204,7 +204,6 @@ public class FXMLVendaController implements Initializable {
         this.carrinhoProdutos.clear();
         atualizarValorTotal();
     }
-
     @FXML
     public void realizarVenda(ActionEvent event){
         FachadaFuncionario fachada = FachadaFuncionario.getInstance();
@@ -216,7 +215,7 @@ public class FXMLVendaController implements Initializable {
         }
 
         catch (NullPointerException nullPointer){
-            Alerta.alertar("Nenhuma opção de pagamento selecionada");
+            Alerta.alertar("Nenhuma opï¿½ï¿½o de pagamento selecionada");
         }
 
         try {

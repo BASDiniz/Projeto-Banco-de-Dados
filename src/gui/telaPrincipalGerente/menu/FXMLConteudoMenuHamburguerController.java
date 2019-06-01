@@ -64,7 +64,12 @@ public class FXMLConteudoMenuHamburguerController implements Initializable {
         AnchorPane pane = FXMLLoader.load(getClass().getResource("/gui/venda/FXMLVenda.fxml"));
         ControllerTelaPrincipalGerente.rootPaneAberta.getChildren().setAll(pane);
     }
+    @FXML
+    private void carregarTelaHistoricoVenda(ActionEvent event) throws IOException{
+        AnchorPane pane = FXMLLoader.load(getClass().getResource("/gui/historicoVenda/FXMLHistoricoVenda.fxml"));
+        ControllerTelaPrincipalGerente.rootPaneAberta.getChildren().setAll(pane);
 
+    }
     @FXML
     private void carregarTelaLucro(ActionEvent event) throws IOException{
         AnchorPane pane = FXMLLoader.load(getClass().getResource("/gui/lucro/FXMLLucro.fxml"));
