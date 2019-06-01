@@ -31,6 +31,9 @@ public class FXMLConteudoMenuHamburguerController implements Initializable {
     private JFXButton buttonLucro;
 
     @FXML
+    private JFXButton buttonFolhaDePagamento;
+
+    @FXML
     private JFXButton buttonSalvarESair;
 
 
@@ -68,6 +71,12 @@ public class FXMLConteudoMenuHamburguerController implements Initializable {
     @FXML
     private void carregarTelaLucro(ActionEvent event) throws IOException{
         AnchorPane pane = FXMLLoader.load(getClass().getResource("/gui/lucro/FXMLLucro.fxml"));
+        ControllerTelaPrincipalGerente.rootPaneAberta.getChildren().setAll(pane);
+    }
+
+    @FXML
+    private void carregarTelaFolhaDePagamento(ActionEvent event) throws IOException {
+        AnchorPane pane = FXMLLoader.load(getClass().getResource("/gui/funcionario/folhaDePagamento/FXMLFolhaDePagamento.fxml"));
         ControllerTelaPrincipalGerente.rootPaneAberta.getChildren().setAll(pane);
     }
 
