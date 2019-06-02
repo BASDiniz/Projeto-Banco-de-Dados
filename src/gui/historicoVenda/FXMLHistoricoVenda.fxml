@@ -19,13 +19,13 @@
          </children></AnchorPane>
       <TableView fx:id="tabela" layoutX="27.0" layoutY="241.0" prefHeight="273.0" prefWidth="746.0">
          <columns>
-            <TableColumn fx:id="nome" prefWidth="45.0" text="Código" />
-            <TableColumn fx:id="cpf" prefWidth="101.0" text="CPF Funcionário" />
-            <TableColumn fx:id="telefonePrincipal" prefWidth="103.0" text="CPF Cliente" />
-            <TableColumn fx:id="telefoneAlternativo" prefWidth="95.0" text="Data de Venda" />
-            <TableColumn fx:id="email" prefWidth="236.0" text="Carrinho de Venda" />
-            <TableColumn fx:id="ativo" prefWidth="85.0" text="Parcelado" />
-            <TableColumn fx:id="nome1" text="Valor" />
+            <TableColumn fx:id="codigoVenda" prefWidth="45.0" text="Código" />
+            <TableColumn fx:id="cpfFunc" prefWidth="101.0" text="CPF Funcionário" />
+            <TableColumn fx:id="cpfCliente" prefWidth="103.0" text="CPF Cliente" />
+            <TableColumn fx:id="dataVenda" prefWidth="95.0" text="Data de Venda" />
+            <TableColumn fx:id="carrinhoVenda" prefWidth="236.0" text="Carrinho de Venda" />
+            <TableColumn fx:id="parcelado" prefWidth="85.0" text="Parcelado" />
+            <TableColumn fx:id="valor" text="Valor" />
          </columns>
       </TableView>
       <JFXButton fx:id="botaoBuscar" layoutX="354.0" layoutY="535.0" prefHeight="29.0" prefWidth="91.0" style="-fx-background-color: purple;" text="Buscar" textFill="WHITE">
