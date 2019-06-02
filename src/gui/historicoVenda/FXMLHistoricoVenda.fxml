@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import com.jfoenix.controls.JFXButton?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
@@ -17,21 +16,15 @@
                </font>
             </Label>
          </children></AnchorPane>
-      <TableView fx:id="tabela" layoutX="27.0" layoutY="241.0" prefHeight="273.0" prefWidth="746.0">
+      <TableView fx:id="tabela" layoutX="99.0" layoutY="229.0" prefHeight="286.0" prefWidth="601.0">
          <columns>
             <TableColumn fx:id="codigoVenda" prefWidth="45.0" text="Código" />
-            <TableColumn fx:id="cpfFunc" prefWidth="101.0" text="CPF Funcionário" />
-            <TableColumn fx:id="cpfCliente" prefWidth="103.0" text="CPF Cliente" />
-            <TableColumn fx:id="dataVenda" prefWidth="95.0" text="Data de Venda" />
-            <TableColumn fx:id="carrinhoVenda" prefWidth="236.0" text="Carrinho de Venda" />
-            <TableColumn fx:id="parcelado" prefWidth="85.0" text="Parcelado" />
-            <TableColumn fx:id="valor" text="Valor" />
+            <TableColumn fx:id="cpfFunc" prefWidth="135.0" text="CPF Funcionário" />
+            <TableColumn fx:id="cpfCliente" prefWidth="133.0" text="CPF Cliente" />
+            <TableColumn fx:id="dataVenda" prefWidth="121.0" text="Data de Venda" />
+            <TableColumn fx:id="parcelado" minWidth="9.0" prefWidth="74.0" text="Parcelado" />
+            <TableColumn fx:id="valor" minWidth="1.0" prefWidth="93.0" text="Valor" />
          </columns>
       </TableView>
-      <JFXButton fx:id="botaoBuscar" layoutX="354.0" layoutY="535.0" prefHeight="29.0" prefWidth="91.0" style="-fx-background-color: purple;" text="Buscar" textFill="WHITE">
-         <font>
-            <Font size="13.0" />
-         </font>
-      </JFXButton>
    </children>
 </AnchorPane>
