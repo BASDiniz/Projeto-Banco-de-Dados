@@ -18,7 +18,7 @@ import negocio.excecao.venda.ProdutoQuantidadeInsuficienteException;
 import repositorio.RepositorioProduto;
 
 /**
- * Classe de negócio Venda
+ * Classe de negï¿½cio Venda
  */
 public class NegocioVenda {
 
@@ -33,7 +33,7 @@ public class NegocioVenda {
     }
 
     /**
-     * Método para adicionar uma venda
+     * Mï¿½todo para adicionar uma venda
      * @param venda
      * @param repositorioProduto
      * @throws ClienteNegadoException
@@ -57,7 +57,7 @@ public class NegocioVenda {
         }
     }
 
-    //Método que verifica a quantidade dos produtos
+    //Mï¿½todo que verifica a quantidade dos produtos
 
     private boolean verificarQuantidadeDosProdutos(Venda venda, RepositorioProduto repositorioProduto) throws ProdutoQuantidadeInsuficienteException{
 
@@ -81,7 +81,7 @@ public class NegocioVenda {
         return true;
     }
 
-    //Método que diminui a quantidade dos produtos após uma venda
+    //Mï¿½todo que diminui a quantidade dos produtos apï¿½s uma venda
 
     private void diminuirQuantidadeDosProdutos(Venda venda, RepositorioProduto repositorioProduto) {
 
@@ -97,7 +97,7 @@ public class NegocioVenda {
     }
 
     /**
-     * Método que determina um lucro mensal em um dado mês
+     * Mï¿½todo que determina um lucro mensal em um dado mï¿½s
      * @param mes
      * @return retorna o lucro mensal
      * @throws NumberFormatException
@@ -108,7 +108,7 @@ public class NegocioVenda {
     }
 
     /**
-     * Método que determina um lucro anual em um dado ano
+     * Mï¿½todo que determina um lucro anual em um dado ano
      * @param ano
      * @return retorna o lucro anual
      * @throws NumberFormatException
@@ -118,9 +118,9 @@ public class NegocioVenda {
     }
 
     /**
-     * Método que determina o funcionário do mês(funcionário que mais vendeu) em um dado mês
+     * Mï¿½todo que determina o funcionï¿½rio do mï¿½s(funcionï¿½rio que mais vendeu) em um dado mï¿½s
      * @param mes
-     * @return retorna o funcionário do mês
+     * @return retorna o funcionï¿½rio do mï¿½s
      * @throws NumberFormatException
      * @throws FuncionarioDoMesNaoEncontradoException
      */
@@ -132,8 +132,20 @@ public class NegocioVenda {
         }
     }
 
+    public void checarDiaDoClienteFiel() {
+        Calendar dataAtual = Calendar.getInstance();
+        if(dataAtual.get(Calendar.DAY_OF_MONTH) == 28) {
+            Cliente clienteFiel = this.repositorioVenda.determinarClienteFiel((dataAtual.get(Calendar.MONTH)) + 1);
+
+            if(clienteFiel != null){
+                clienteFiel.setFiel(true);
+                clienteFiel.getContato().enviarEmailClienteFiel();
+            }
+        }
+    }
+
     /**
-     * Método que determina o cliente fiel(cliente que mais gastou) em um dado mês
+     * Mï¿½todo que determina o cliente fiel(cliente que mais gastou) em um dado mï¿½s
      * @param mes
      * @return retorna o cliente fiel
      * @throws NumberFormatException
@@ -148,7 +160,7 @@ public class NegocioVenda {
     }
 
     /**
-     * Método que busca todos os cliente que possuem pendências
+     * Mï¿½todo que busca todos os cliente que possuem pendï¿½ncias
      * @return retorna um ArrayList de cliente
      */
     public ArrayList<Cliente> buscarClientesComPendencia() {
@@ -156,7 +168,7 @@ public class NegocioVenda {
     }
 
     /**
-     * Método que busca os produtos mais vendidos
+     * Mï¿½todo que busca os produtos mais vendidos
      * @param mes
      * @return retorna um ArrayList de produtos
      * @throws NumberFormatException
@@ -166,35 +178,28 @@ public class NegocioVenda {
     }
 
     /**
-     * Método que verifica se é dia 28 e bonifica o funcionário do mês
+     * Mï¿½todo que verifica se ï¿½ dia 28 e torna um determinado cliente em um cliente fiel
      */
     public void checarDiaDaBonificacao(){
         Calendar dataAtual = Calendar.getInstance();
+        //Tava dia 28, mudei para 1 sÃ³ pra testes
+        Funcionario funcDoMes = this.repositorioVenda.determinarFuncionarioDoMes((dataAtual.get(Calendar.MONTH)) + 1);
+
         if(dataAtual.get(Calendar.DAY_OF_MONTH) == 28){
-            Funcionario funcDoMes = this.repositorioVenda.determinarFuncionarioDoMes((dataAtual.get(Calendar.MONTH)) + 1);
             if(funcDoMes != null){
                 funcDoMes.bonificar();
+                System.out.println(funcDoMes);
+            }
+        }
+        else{
+            if(funcDoMes != null) {
+                funcDoMes.setFuncDoMes(false);
             }
         }
     }
 
     /**
-     * Método que verifica se é dia 28 e torna um determinado cliente em um cliente fiel
-     */
-    public void checarDiaDoClienteFiel() {
-        Calendar dataAtual = Calendar.getInstance();
-        if(dataAtual.get(Calendar.DAY_OF_MONTH) == 28) {
-            Cliente clienteFiel = this.repositorioVenda.determinarClienteFiel((dataAtual.get(Calendar.MONTH)) + 1);
-
-            if(clienteFiel != null){
-                clienteFiel.setFiel(true);
-                clienteFiel.getContato().enviarEmailClienteFiel();
-            }
-        }
-    }
-
-    /**
-     * Método que salva os dados do repositorioVenda
+     * Mï¿½todo que salva os dados do repositorioVenda
      */
     public void salvarDados(){
         this.repositorioVenda.salvarDados();
@@ -202,7 +207,7 @@ public class NegocioVenda {
     }
 
     /**
-     * Método que faz a leitura dos dados do repositorioVenda
+     * Mï¿½todo que faz a leitura dos dados do repositorioVenda
      */
     public void lerDados(){
         this.repositorioVenda.lerDados();
