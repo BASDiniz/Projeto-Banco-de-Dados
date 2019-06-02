@@ -4,6 +4,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 import negocio.entidade.Cliente;
 import negocio.entidade.Funcionario;
 import negocio.entidade.Venda;
@@ -40,6 +41,9 @@ public class FXMLHistoricoVendaController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb){
-        System.out.println("OK");
+        this.codigoVenda.setCellValueFactory(new PropertyValueFactory<Venda, String>("codigo"));
+        this.cpfFunc.setCellValueFactory(new PropertyValueFactory<Funcionario, String>("cpf"));
+
+        //chamar método pra retornar o array de vendas
     }
 }
