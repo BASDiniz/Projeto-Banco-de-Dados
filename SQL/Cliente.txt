@@ -1,0 +1,22 @@
+create table cliente
+(
+	cpf varchar(11) not null,
+	nome varchar(100) default '' not null
+);
+
+create unique index cliente_cpf_uindex
+	on cliente (cpf);
+
+alter table cliente
+	add constraint cliente_pk
+		primary key (cpf);
+
+
+alter table cliente
+	add contato varchar(50) null;
+
+alter table cliente
+	add constraint cliente_contato_email_fk
+		foreign key (contato) references contato (email)
+			on update cascade on delete cascade;
+

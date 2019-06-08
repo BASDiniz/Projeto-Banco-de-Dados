@@ -1,0 +1,18 @@
+create table Funcionario
+(
+	salarioComBonificacao double default 0.0 not null,
+	funcDoMes boolean default false not null,
+	salario double default 0.0 not null,
+	cargo_gerente boolean default false not null,
+	nome varchar(100) default '' not null,
+	cpf varchar(11) not null
+)
+comment 'Tabela de funcionario';
+
+create unique index Funcionario_cpf_uindex
+	on Funcionario (cpf);
+
+alter table Funcionario
+	add constraint Funcionario_pk
+		primary key (cpf);
+
