@@ -1,31 +1,31 @@
 create schema projeto_bd collate utf8mb4_0900_ai_ci;
-use projeto_bd;
-create table contato
-(
-	telefone_principal varchar(11) null,
-	telefone_alternativo varchar(11) null,
-	email varchar(50) not null,
-	constraint contato_email_uindex
-		unique (email)
-);
-
-alter table contato
-	add primary key (email);
 
 create table cliente
 (
 	cpf varchar(11) not null,
 	nome varchar(100) default '' not null,
-	contato varchar(50) null,
 	constraint cliente_cpf_uindex
-		unique (cpf),
-	constraint cliente_contato_email_fk
-		foreign key (contato) references contato (email)
-			on update cascade on delete cascade
+		unique (cpf)
 );
 
 alter table cliente
 	add primary key (cpf);
+
+create table contato
+(
+	telefone_principal varchar(11) null,
+	telefone_alternativo varchar(11) null,
+	email varchar(50) not null,
+	proprietario varchar(11) null,
+	constraint contato_email_uindex
+		unique (email),
+	constraint contato_cliente_cpf_fk
+		foreign key (proprietario) references cliente (cpf)
+			on update cascade on delete cascade
+);
+
+alter table contato
+	add primary key (email);
 
 create table funcionario
 (
