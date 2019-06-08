@@ -1,0 +1,24 @@
+create table produto
+(
+	codigo int not null,
+	tipo_de_roupa varchar(20) not null,
+	desc_produto varchar(100) null,
+	faixa_etaria varchar(30) not null,
+	valor_venda double default 0.0 not null,
+	genero varchar(50) not null,
+	quantidade int not null,
+	cor varchar(100) not null,
+	ativo boolean default true not null,
+	column_10 int null,
+	categoria varchar(100) not null,
+	tamanho varchar(5) not null
+);
+
+
+create unique index produto_codigo_uindex
+	on produto (codigo);
+
+alter table produto
+	add constraint produto_pk
+		primary key (codigo);
+

@@ -1,0 +1,46 @@
+create table venda
+(
+	dataDeVenda varchar(10) not null,
+	codigo int not null,
+	valorTotal double default 0.0 not null,
+	pagamentoParcelado boolean default false not null,
+	descricao varchar(100) default '' null
+);
+
+create unique index venda_codigo_uindex
+	on venda (codigo);
+
+alter table venda
+	add constraint venda_pk
+		primary key (codigo);
+
+
+
+alter table venda
+	add produto int not null;
+
+alter table venda
+	add constraint venda_produto_codigo_fk
+		foreign key (produto) references produto (codigo)
+			on update cascade on delete cascade;
+
+alter table venda
+	add cliente varchar(11) null;
+
+alter table venda
+	add constraint venda_cliente_cpf_fk
+		foreign key (cliente) references cliente (cpf)
+			on update cascade on delete set null;
+
+
+alter table venda modify produto int null;
+
+alter table venda
+	add funcionario varchar(11) null;
+
+alter table venda
+	add constraint venda_funcionario_cpf_fk
+		foreign key (funcionario) references funcionario (cpf)
+			on update cascade on delete set null;
+
+

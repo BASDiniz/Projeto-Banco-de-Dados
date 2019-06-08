@@ -1,0 +1,14 @@
+create table contato
+(
+	telefone_principal varchar(11) null,
+	telefone_alternativo varchar(11) null,
+	email varchar(50) not null
+);
+
+create unique index contato_email_uindex
+	on contato (email);
+
+alter table contato
+	add constraint contato_pk
+		primary key (email);
+
