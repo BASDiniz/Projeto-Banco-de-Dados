@@ -52,8 +52,15 @@ public interface IRepositorioCliente {
     void salvarDados();
 
     void lerDados();
+    
+    void salvarDadosFieis();
+    
+    void lerDadosFieis();
 
     ArrayList<Cliente> listarTodosOsFuncionarios();
-
-
+    
+    void adicionarClienteFiel(Cliente cliente);
+    
+    ArrayList<Cliente> listarClientesFieis();
+    
 }
