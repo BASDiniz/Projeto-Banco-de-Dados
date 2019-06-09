@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane id="AnchorPane" prefHeight="602.0" prefWidth="797.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.171" fx:controller="gui.historicoFidelidade.FXMLHistoricoFidelidadeController">
+   <children>
+      <AnchorPane layoutY="90.0" prefHeight="101.0" prefWidth="797.0" style="-fx-background-color: #d36a1b;">
+         <children>
+            <Label layoutX="287.0" layoutY="33.0" prefHeight="35.0" prefWidth="263.0" text="Histórico de Fidelidade" textFill="WHITE">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Label>
+         </children>
+      </AnchorPane>
+      <TableView fx:id="tabela" layoutX="25.0" layoutY="214.0" prefHeight="368.0" prefWidth="748.0">
+         <columns>
+            <TableColumn fx:id="nome" prefWidth="116.0" text="Nome" />
+            <TableColumn fx:id="cpf" prefWidth="110.0" text="CPF" />
+            <TableColumn fx:id="telefonePrincipal" prefWidth="118.0" text="Telefone Principal" />
+            <TableColumn fx:id="email" prefWidth="254.0" text="E-mail" />
+            <TableColumn fx:id="fiel" prefWidth="81.0" text="Fiel" />
+            <TableColumn fx:id="ativo" prefWidth="68.0" text="Ativo" />
+         </columns>
+      </TableView>
+   </children>
+</AnchorPane>
