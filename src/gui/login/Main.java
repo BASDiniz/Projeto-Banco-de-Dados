@@ -30,12 +30,11 @@ public class Main extends Application {
     }
 
     public static void main(String[] args) throws FuncionarioJaCadastradoException, DadosInvalidosException, ContatoInvalidoException, GerenteJaCadastradoException {
-        //FachadaGerente.getInstance().adicionarFuncionario(, "123123", 800, true);
-//        try {
-//            FachadaGerente.getInstance().getFachadaGerente().adicionarCliente("Bruno Diniz", "11111111111", "12312312312", "12312312312", "bruno@gmail.com");
-//        } catch (ClienteJaCadastradoException e) {
-//            //e.printStackTrace();
-//        }
+        try {
+            FachadaGerente.getInstance().getFachadaGerente().adicionarCliente("Bruno Diniz", "11111111111", "12312312312", "12312312312", "bruno@gmail.com");
+        } catch (ClienteJaCadastradoException e) {
+            e.printStackTrace();
+        }
         launch(args);
     }
 }
