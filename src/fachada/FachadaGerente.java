@@ -25,6 +25,7 @@ public class FachadaGerente {
      * Construtor FachadaGerente
      */
     private FachadaGerente(){
+
         this.fachadaGerente = FachadaFuncionario.getInstance();
     }
 

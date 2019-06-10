@@ -29,13 +29,15 @@ public class Main extends Application {
         stage.show();
     }
 
-    public static void main(String[] args) throws FuncionarioJaCadastradoException, DadosInvalidosException, ContatoInvalidoException, GerenteJaCadastradoException {
-        //FachadaGerente.getInstance().adicionarFuncionario(, "123123", 800, true);
+//    public static void main(String[] args) throws FuncionarioJaCadastradoException, DadosInvalidosException, ContatoInvalidoException, GerenteJaCadastradoException {
 //        try {
-//            FachadaGerente.getInstance().getFachadaGerente().adicionarCliente("Bruno Diniz", "11111111111", "12312312312", "12312312312", "bruno@gmail.com");
+            //Linha abaixo Adiciona um Cliente
+            //FachadaGerente.getInstance().getFachadaGerente().adicionarCliente("Bruno Diniz", "11111111111", "12312312312", "12312312312", "bruno@gmail.com");
+            // Linha abaixo Adiciona um Gerente, ultimo parametro referente a gerente
+            //FachadaGerente.getInstance().adicionarFuncionario("Bruno Diniz", "11111111111", "12312312312", "12312312312", "bruno@gmail.com", "123123", 800, true);
 //        } catch (ClienteJaCadastradoException e) {
-//            //e.printStackTrace();
+//            e.printStackTrace();
 //        }
-        launch(args);
-    }
+//        launch(args);
+//    }
 }
