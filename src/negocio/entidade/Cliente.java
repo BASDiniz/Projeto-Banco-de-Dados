@@ -30,6 +30,13 @@ public class Cliente implements Serializable {
         this.fiel = false;
         this.ativo = true;
     }
+    public Cliente(String nome, String cpf, Contato contato,boolean fiel) {
+        this.nome = nome;
+        this.cpf = cpf;
+        this.contato = contato;
+        this.fiel = fiel;
+        this.ativo = true;
+    }
 
     // Getters e Setters
 

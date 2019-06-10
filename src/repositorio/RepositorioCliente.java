@@ -2,9 +2,16 @@ package repositorio;
 
 
 import java.io.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
+
+import connection.ConnectionFactory;
 import interfaces.IRepositorioCliente;
 import negocio.entidade.Cliente;
+import negocio.entidade.Contato;
 import negocio.entidade.Funcionario;
 
 /**
@@ -34,55 +41,127 @@ public class RepositorioCliente implements IRepositorioCliente, Serializable{
             return repCliente;
         }
     }
-
+    //banco implementado
     @Override
-    public int procurarCliente(Cliente cliente) {
-
-        for (int i = 0; i < this.listaClientes.size(); i++) {
-
-            if(this.listaClientes.get(i).equals(cliente)) {
-
-                if(cliente.getAtivo() == true){
-                    return i;
+    public int procurarCliente(Cliente cliente) { // verifica se existe um cliente no banco e se eh ativo/// FUNCIONANDO
+        Connection conexao = ConnectionFactory.getConnection();
+        PreparedStatement stmt = null;
+        try{
+            stmt = conexao.prepareStatement("SELECT * FROM cliente WHERE cpf = ? ");
+            stmt.setString(1,cliente.getCpf());
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                if (rs.getInt("ativo") == 1) {
+                    return 1;
                 }
             }
+        }catch (SQLException e){
+            e.getMessage();
+            e.printStackTrace();
+        }finally {
+            ConnectionFactory.closeConnection(conexao,stmt);
         }
-        return -1;
+    return -1;
     }
 
+    // banco implementado
+    @Override
+    public void adicionarCliente(Cliente cliente) {// adiciona cliente no banco // funcionando
+        Connection conexao = ConnectionFactory.getConnection();
+        PreparedStatement stmt = null;
 
-    @Override
-    public void adicionarCliente(Cliente cliente) {
-        this.listaClientes.add(cliente);
-    }
-    
-    @Override
-    public void adicionarClienteFiel(Cliente cliente) {
-        this.clientesFieis.add(cliente);
-    }
+        try {
+            stmt = conexao.prepareStatement("INSERT INTO cliente (nome, cpf, fiel, ativo) VALUES (?, ?, ?, ?)");
+            stmt.setString(1, cliente.getNome());
+            stmt.setString(2, cliente.getCpf());
+            stmt.setBoolean(3, cliente.getFiel());
+            stmt.setBoolean(4, cliente.getAtivo());
 
+            stmt.executeUpdate();
+
+            stmt = conexao.prepareStatement("INSERT INTO contato (telefonePrincipal, telefoneAlternativo, email, proprietario) VALUES (?, ?, ?, ?)");
+            stmt.setString(1, cliente.getContato().getTelefonePrincipal());
+            stmt.setString(2, cliente.getContato().getTelefoneAlternativo());
+            stmt.setString(3, cliente.getContato().getEmail());
+            stmt.setString(4, cliente.getCpf());
+
+            stmt.executeUpdate();
+
+
+        } catch (SQLException e) {
+            //e.printStackTrace();
+        } finally{
+            ConnectionFactory.closeConnection(conexao, stmt);
+        }
+    }
+    // banco implementado
     @Override
-    public Cliente buscarPorCpf(String cpf) {
-        for(int i = 0; i < this.listaClientes.size(); i++) {
-            if(this.listaClientes.get(i).getCpf().equals(cpf)) {
-                return this.listaClientes.get(i);
+    public void adicionarClienteFiel(Cliente cliente) { // Atualiza status de fiel em um cliente // FUNCIONANDO
+        Connection conexao = ConnectionFactory.getConnection();
+        PreparedStatement stmt = null;
+        try{
+            stmt = conexao.prepareStatement("UPDATE cliente SET fiel = ? WHERE cpf = ?");
+            stmt.setInt(1,1);
+            stmt.setString(2,cliente.getCpf());
+
+            stmt.executeUpdate();
+
+        }catch (SQLException e){
+            e.getMessage();
+            e.printStackTrace();
+        }finally {
+            ConnectionFactory.closeConnection(conexao,stmt);
+        }
+    }
+    // banco implementado
+    @Override
+    public Cliente buscarPorCpf(String cpf) { // busca um cliente no banco pelo cpf // FUNCIONANDO
+        Connection conexao = ConnectionFactory.getConnection();
+        PreparedStatement stmt = null;
+        try{
+            stmt = conexao.prepareStatement("SELECT * FROM cliente cli join contato cont on cli.cpf = cont.proprietario WHERE cli.cpf = ?");
+            stmt.setString(1,cpf);
+            ResultSet rs = stmt.executeQuery();
+            if(rs.next()){
+                Contato contatoBD = new Contato (rs.getString("telefonePrincipal"),rs.getString("telefoneAlternativo"),rs.getString("email"));
+                Cliente clienteBD = new Cliente(rs.getString("nome"),rs.getString("cpf"),contatoBD);
+                return clienteBD;
             }
+
+        }catch (SQLException e){
+            e.getMessage();
+            e.printStackTrace();
+        }finally {
+            ConnectionFactory.closeConnection(conexao,stmt);
         }
         return null;
     }
-
+    //banco implementado
     @Override
-    public ArrayList<Cliente> listarPorNomeCliente(String nome) {
+    public ArrayList<Cliente> listarPorNomeCliente(String nome) { // lista cliente com o nome passado // FUNCIONANDO
 
         ArrayList<Cliente> clientesEncontrados = new ArrayList<Cliente>();
+        Connection conexao = ConnectionFactory.getConnection();
+        PreparedStatement stmt = null;
+        try{
+            stmt = conexao.prepareStatement("SELECT * FROM cliente cli join contato cont on cli.cpf = cont.proprietario WHERE cli.nome = ?");
+            stmt.setString(1,nome);
+            ResultSet rs = stmt.executeQuery();
 
-        for(int i = 0; i < this.listaClientes.size(); i++) {
-
-            if(this.listaClientes.get(i).getNome().toLowerCase().startsWith(nome.toLowerCase())) {
-                clientesEncontrados.add(this.listaClientes.get(i));
+            while(rs.next()){
+                Contato contatoBD = new Contato (rs.getString("telefonePrincipal"),rs.getString("telefoneAlternativo"),rs.getString("email"));
+                Cliente clienteBD = new Cliente(rs.getString("nome"),rs.getString("cpf"),contatoBD,rs.getBoolean("fiel"));
+                clientesEncontrados.add(clienteBD);
             }
+            return clientesEncontrados;
+        }catch (SQLException e){
+            e.getMessage();
+            e.printStackTrace();
+        }finally {
+            ConnectionFactory.closeConnection(conexao,stmt);
         }
-        return clientesEncontrados;
+
+        return null;
     }
 
     @Override
@@ -171,20 +250,39 @@ public class RepositorioCliente implements IRepositorioCliente, Serializable{
 
     @Override
     public void lerDados(){
-        try{
-            FileInputStream file = new FileInputStream("listaClientes.dat");
-            ObjectInputStream is = new ObjectInputStream(file);
-            ArrayList<Cliente> listaClientes = (ArrayList<Cliente>) is.readObject();
-            this.listaClientes = listaClientes;
-            is.close();
-
-        }
-        catch (FileNotFoundException fileNotFound) {
-        }
-        catch (IOException ioException) {
-        }
-        catch (ClassNotFoundException classNotFound) {
-        }
+//        try{
+//            Connection conexao = ConnectionFactory.getConnection();
+//            PreparedStatement stmt = null;
+//
+//            stmt = conexao.prepareStatement()
+//        }catch (SQLException e){
+//            e.getMessage();
+//            e.printStackTrace();
+//        }finally {
+//            ConnectionFactory.closeConnection(conexao,stmt);
+//        }
+//        try{
+//            FileInputStream file = new FileInputStream("listaClientes.dat");
+//            ObjectInputStream is = new ObjectInputStream(file);
+//            ArrayList<Cliente> listaClientes = (ArrayList<Cliente>) is.readObject();
+//            this.listaClientes = listaClientes;
+//            for (Cliente item:listaClientes) {
+//                System.out.println('k');
+//                System.out.println(item.getCpf());
+//            }
+//            is.close();
+//
+//        }
+//        catch (FileNotFoundException fileNotFound) {
+//
+//        }
+//        catch (IOException ioException) {
+//            ioException.getMessage();
+//            ioException.printStackTrace();
+//        }
+//        catch (ClassNotFoundException classNotFound) {
+//
+//        }
 
     }
     
@@ -219,6 +317,11 @@ public class RepositorioCliente implements IRepositorioCliente, Serializable{
 
     }
 
+    public static void main(String[] args) {
+        RepositorioCliente teste = new RepositorioCliente();
+        ArrayList<Cliente> zaga = teste.listarPorNomeCliente("Erik Jhonatta");
+        System.out.println(zaga.get(0).toString());
+    }
 }
 
 

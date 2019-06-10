@@ -39,11 +39,11 @@ public class NegocioFuncionario {
 
         if(funcionario instanceof Funcionario){
             Funcionario funcionario1 = (Funcionario) funcionario;
-            if (this.repositorioCliente.procurarCliente(funcionario1) == -1 && funcionario1.verificarDados() == true) {
-                if (funcionario1.getCargoGerente() != true) {
+            if (this.repositorioCliente.procurarCliente(funcionario1) == -1 && funcionario1.verificarDados()) {
+                if (funcionario1.getCargoGerente() == false) { // se nao for gerente
                     this.repositorioCliente.adicionarCliente(funcionario1);
                 }
-                else if(repositorioCliente.verificarGerenteExistente() == false){
+                else if(!repositorioCliente.verificarGerenteExistente()){
                     this.repositorioCliente.adicionarCliente(funcionario1);
                 }
                 else{
