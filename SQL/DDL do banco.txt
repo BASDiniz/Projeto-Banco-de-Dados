@@ -4,6 +4,8 @@ create table cliente
 (
 	cpf varchar(11) not null,
 	nome varchar(100) default '' not null,
+	fiel tinyint(1) default 0 not null,
+	ativo tinyint(1) default 0 not null,
 	constraint cliente_cpf_uindex
 		unique (cpf)
 );
@@ -13,8 +15,8 @@ alter table cliente
 
 create table contato
 (
-	telefone_principal varchar(11) null,
-	telefone_alternativo varchar(11) null,
+	telefonePrincipal varchar(11) null,
+	telefoneAlternativo varchar(11) null,
 	email varchar(50) not null,
 	proprietario varchar(11) null,
 	constraint contato_email_uindex

@@ -7,7 +7,7 @@ import java.io.Serializable;
 
 /**
  * Classe que representa um cliente.
- * @author Èverton Vieira
+ * @author ï¿½verton Vieira
  * @author Bruno Diniz
  * @version 2.00
  */
@@ -53,7 +53,7 @@ public class Cliente implements Serializable {
         this.contato = contato;
     }
 
-    public boolean getFiel() {
+    public Boolean getFiel() {
         return this.fiel;
     }
 
@@ -61,7 +61,7 @@ public class Cliente implements Serializable {
         this.fiel = fiel;
     }
 
-    public boolean getAtivo() {
+    public Boolean getAtivo() {
         return this.ativo;
     }
 
@@ -165,7 +165,7 @@ public class Cliente implements Serializable {
      * M?todo que verifica se todos os atributos(dados) do cliente s?o v?lidos
      *
      * @return retorna "true" se todos os atributos(dados) s?o v?lidos.
-     * Caso contrário, retorna "false"
+     * Caso contrï¿½rio, retorna "false"
      */
     public boolean verificarDados() throws DadosInvalidosException, ContatoInvalidoException {
 
@@ -201,7 +201,7 @@ public class Cliente implements Serializable {
     }
 
     /**
-     * Método que sobrescreve o método equals.
+     * Mï¿½todo que sobrescreve o mï¿½todo equals.
      * @param obj
      * @return
      */
@@ -218,7 +218,7 @@ public class Cliente implements Serializable {
     }
 
     /**
-     * Sobrescrita do método toString.
+     * Sobrescrita do mï¿½todo toString.
      *
      * @return retorna o objeto Pessoa como uma string
      */

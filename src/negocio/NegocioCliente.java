@@ -1,5 +1,6 @@
-package negocio;
+﻿package negocio;
 
+import dados.DbCliente;
 import interfaces.IRepositorioCliente;
 import negocio.entidade.Cliente;
 import negocio.excecao.cliente.ClienteJaCadastradoException;
@@ -7,39 +8,25 @@ import negocio.excecao.cliente.ClienteNaoEncontradoException;
 import negocio.excecao.cliente.ClienteAtivoException;
 import negocio.excecao.cliente.DadosInvalidosException;
 import negocio.excecao.cliente.contato.ContatoInvalidoException;
+import repositorio.RepositorioCliente;
 import repositorio.RepositorioVenda;
 
 import java.util.ArrayList;
 
-/**
- * Classe de Neg�cio Cliente.
- * @author �verton Vieira.
- */
 public class NegocioCliente {
+    private DbCliente dbCliente;
+    private RepositorioCliente repositorioCliente;
 
-    private IRepositorioCliente repositorioCliente;
-
-    /**
-     * Construtor NegocioCliente
-     * @param repositorioCliente
-     */
-    public NegocioCliente(IRepositorioCliente repositorioCliente) {
+    public NegocioCliente(DbCliente dbCliente, RepositorioCliente repositorioCliente) {
+        this.dbCliente = dbCliente;
         this.repositorioCliente = repositorioCliente;
     }
 
-    /**
-     * M�todo que adiciona cliente.
-     * @param cliente
-     * @throws DadosInvalidosException
-     * @throws ContatoInvalidoException
-     * @throws ClienteJaCadastradoException
-     */
     public void adicionarCliente(Cliente cliente) throws DadosInvalidosException, ContatoInvalidoException, ClienteJaCadastradoException {
 
-        if(this.repositorioCliente.procurarCliente(cliente) == -1 && cliente.verificarDados() == true) {
-            this.repositorioCliente.adicionarCliente(cliente);
+        if(this.dbCliente.procurarCliente(cliente) == null && cliente.verificarDados() == true) {
+            this.dbCliente.adicionarCliente(cliente);
         }
-
         else {
             throw new ClienteJaCadastradoException();
         }

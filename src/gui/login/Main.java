@@ -10,6 +10,7 @@ import negocio.entidade.Cliente;
 import negocio.entidade.Contato;
 import negocio.entidade.Funcionario;
 import fachada.FachadaGerente;
+import negocio.excecao.cliente.ClienteJaCadastradoException;
 import negocio.excecao.cliente.DadosInvalidosException;
 import negocio.excecao.cliente.contato.ContatoInvalidoException;
 import negocio.excecao.cliente.funcionario.FuncionarioJaCadastradoException;
@@ -29,7 +30,12 @@ public class Main extends Application {
     }
 
     public static void main(String[] args) throws FuncionarioJaCadastradoException, DadosInvalidosException, ContatoInvalidoException, GerenteJaCadastradoException {
-        //FachadaGerente.getInstance().adicionarFuncionario("Bruno Diniz", "11111111111", "12312312312", "12312312312", "bruno@gmail.com", "123123", 800, true);
+        //FachadaGerente.getInstance().adicionarFuncionario(, "123123", 800, true);
+//        try {
+//            FachadaGerente.getInstance().getFachadaGerente().adicionarCliente("Bruno Diniz", "11111111111", "12312312312", "12312312312", "bruno@gmail.com");
+//        } catch (ClienteJaCadastradoException e) {
+//            //e.printStackTrace();
+//        }
         launch(args);
     }
 }

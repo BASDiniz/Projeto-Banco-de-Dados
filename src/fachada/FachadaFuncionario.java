@@ -1,5 +1,6 @@
 package fachada;
 
+import dados.DbCliente;
 import negocio.NegocioCliente;
 import negocio.NegocioFuncionario;
 import negocio.NegocioProduto;
@@ -39,6 +40,9 @@ public class FachadaFuncionario{
     private NegocioProduto negocioProduto;
     private NegocioVenda negocioVenda;
 
+    private DbCliente dbCliente;
+
+
     private RepositorioCliente repositorioCliente;
     private RepositorioProduto repositorioProduto;
     private RepositorioVenda repositorioVenda;
@@ -50,9 +54,9 @@ public class FachadaFuncionario{
 
         this.repositorioProduto = new RepositorioProduto();
         this.repositorioVenda = new RepositorioVenda();
+        this.dbCliente = new DbCliente();
 
-
-        this.negocioCliente = new NegocioCliente(this.repositorioCliente = RepositorioCliente.getInstance());
+        this.negocioCliente = new NegocioCliente(this.dbCliente, this.repositorioCliente);
         this.negocioFuncionario = new NegocioFuncionario(this.repositorioCliente = RepositorioCliente.getInstance());
         this.negocioProduto = new NegocioProduto(this.repositorioProduto);
         this.negocioVenda = new NegocioVenda(this.repositorioVenda);
