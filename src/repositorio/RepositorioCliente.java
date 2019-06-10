@@ -17,12 +17,14 @@ public class RepositorioCliente implements IRepositorioCliente, Serializable{
     private static RepositorioCliente repCliente;
 
     private ArrayList<Cliente> listaClientes;
+    private ArrayList<Cliente> clientesFieis;
 
     /**
      * Construtor RepositorioCliente
      */
     private RepositorioCliente() {
         this.listaClientes = new ArrayList<Cliente>();
+        this.clientesFieis = new ArrayList<Cliente>();
     }
 
     public static RepositorioCliente getInstance(){
@@ -52,6 +54,11 @@ public class RepositorioCliente implements IRepositorioCliente, Serializable{
     @Override
     public void adicionarCliente(Cliente cliente) {
         this.listaClientes.add(cliente);
+    }
+    
+    @Override
+    public void adicionarClienteFiel(Cliente cliente) {
+        this.clientesFieis.add(cliente);
     }
 
     @Override
@@ -104,6 +111,11 @@ public class RepositorioCliente implements IRepositorioCliente, Serializable{
             }
         }
         return funcionarios;
+    }
+    
+    @Override
+    public ArrayList<Cliente> listarClientesFieis() {
+        return this.clientesFieis;
     }
 
     @Override
@@ -166,6 +178,37 @@ public class RepositorioCliente implements IRepositorioCliente, Serializable{
             this.listaClientes = listaClientes;
             is.close();
 
+        }
+        catch (FileNotFoundException fileNotFound) {
+        }
+        catch (IOException ioException) {
+        }
+        catch (ClassNotFoundException classNotFound) {
+        }
+
+    }
+    
+    @Override
+    public void salvarDadosFieis() {
+        try{
+            FileOutputStream file = new FileOutputStream("listaClientesFieis.dat");
+            ObjectOutputStream os = new ObjectOutputStream(file);
+            os.writeObject(this.clientesFieis);
+            os.close();
+        }catch(IOException ioException){
+
+        }
+
+    }
+    
+    @Override
+    public void lerDadosFieis(){
+        try{
+            FileInputStream file = new FileInputStream("listaClientesFieis.dat");
+            ObjectInputStream is = new ObjectInputStream(file);
+            ArrayList<Cliente> clientesFieis = (ArrayList<Cliente>) is.readObject();
+            this.clientesFieis = clientesFieis;
+            is.close();
         }
         catch (FileNotFoundException fileNotFound) {
         }

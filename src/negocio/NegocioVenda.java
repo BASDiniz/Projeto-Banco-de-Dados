@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import negocio.excecao.cliente.ClienteFielNaoEncontradoException;
 import negocio.excecao.venda.ProdutoQuantidadeInsuficienteException;
+import repositorio.RepositorioCliente;
 import repositorio.RepositorioProduto;
 
 /**
@@ -132,7 +133,7 @@ public class NegocioVenda {
         }
     }
 
-    public void checarDiaDoClienteFiel() {
+    public void checarDiaDoClienteFiel(RepositorioCliente repositorioCliente) {
         Calendar dataAtual = Calendar.getInstance();
         if(dataAtual.get(Calendar.DAY_OF_MONTH) == 28) {
             Cliente clienteFiel = this.repositorioVenda.determinarClienteFiel((dataAtual.get(Calendar.MONTH)) + 1);
@@ -140,6 +141,7 @@ public class NegocioVenda {
             if(clienteFiel != null){
                 clienteFiel.setFiel(true);
                 clienteFiel.getContato().enviarEmailClienteFiel();
+                repositorioCliente.adicionarClienteFiel(clienteFiel);
             }
         }
     }

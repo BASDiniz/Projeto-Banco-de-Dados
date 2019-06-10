@@ -197,7 +197,11 @@ public class FachadaFuncionario{
         
         this.negocioCliente.habilitarCliente(cliente);
     }
-
+    
+    public ArrayList<Cliente> listarClientesFieis() {
+        return this.negocioCliente.listarClientesFieis();
+    }
+    
     // Produto
 
     /**
@@ -405,7 +409,7 @@ public class FachadaFuncionario{
      * M?todo para checar se ? dia 28 e tornar um cliente em cliente fiel
      */
     public void checarDiaDoClienteFiel() {
-        this.negocioVenda.checarDiaDoClienteFiel();
+        this.negocioVenda.checarDiaDoClienteFiel(this.repositorioCliente = RepositorioCliente.getInstance());
     }
 
     /**
@@ -413,6 +417,7 @@ public class FachadaFuncionario{
      */
     public void salvarDados(){
         this.negocioCliente.salvarDados();
+        this.negocioCliente.salvarDadosFieis();
         this.negocioProduto.salvarDados();
         this.negocioVenda.salvarDados();
     }
@@ -422,6 +427,7 @@ public class FachadaFuncionario{
      */
     public void lerDados(){
         this.negocioCliente.lerDados();
+        this.negocioCliente.lerDadosFieis();
         this.negocioProduto.lerDados();
         this.negocioVenda.lerDados();
     }

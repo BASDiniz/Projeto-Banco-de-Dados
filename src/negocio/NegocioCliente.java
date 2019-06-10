@@ -1,4 +1,4 @@
-package negocio;
+﻿package negocio;
 
 import dados.DbCliente;
 import interfaces.IRepositorioCliente;
@@ -12,7 +12,6 @@ import repositorio.RepositorioCliente;
 import repositorio.RepositorioVenda;
 
 import java.util.ArrayList;
-
 
 public class NegocioCliente {
     private DbCliente dbCliente;
@@ -63,6 +62,10 @@ public class NegocioCliente {
             return clientesEncontrados;
         }
         throw new ClienteNaoEncontradoException();
+    }
+    
+    public ArrayList<Cliente> listarClientesFieis() {
+        return this.repositorioCliente.listarClientesFieis();
     }
 
     /**
@@ -130,5 +133,12 @@ public class NegocioCliente {
     public void lerDados() {
         this.repositorioCliente.lerDados();
     }
+    
+    public void salvarDadosFieis() {
+        this.repositorioCliente.salvarDadosFieis();
+    }
 
+    public void lerDadosFieis() {
+        this.repositorioCliente.lerDadosFieis();
+    }
 }

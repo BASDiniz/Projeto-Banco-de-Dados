@@ -84,6 +84,12 @@ public class FXMLConteudoMenuHamburguerController implements Initializable {
         AnchorPane pane = FXMLLoader.load(getClass().getResource("/gui/funcionario/folhaDePagamento/FXMLFolhaDePagamento.fxml"));
         ControllerTelaPrincipalGerente.rootPaneAberta.getChildren().setAll(pane);
     }
+    
+    @FXML
+    private void carregarTelaHistoricoFidelidade(ActionEvent event) throws IOException {
+        AnchorPane pane = FXMLLoader.load(getClass().getResource("/gui/historicoFidelidade/FXMLHistoricoFidelidade.fxml"));
+        ControllerTelaPrincipalGerente.rootPaneAberta.getChildren().setAll(pane);
+    }
 
     @FXML
     private void salvarESair(ActionEvent event) {
