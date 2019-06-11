@@ -16,19 +16,19 @@ public class DbCliente {
         PreparedStatement stmt = null;
 
         try {
-            stmt = conexao.prepareStatement("INSERT INTO cliente (nome, cpf, fiel, ativo) VALUES (?, ?, ?, ?)");
+            stmt = conexao.prepareStatement("INSERT INTO cliente (nome, cpf, fiel, ativo, contato) VALUES (?, ?, ?, ?, ?)");
             stmt.setString(1, cliente.getNome());
             stmt.setString(2, cliente.getCpf());
             stmt.setBoolean(3, cliente.getFiel());
             stmt.setBoolean(4, cliente.getAtivo());
+            stmt.setString(5,cliente.getContato().getEmail());
 
             stmt.executeUpdate();
 
-            stmt = conexao.prepareStatement("INSERT INTO contato (telefonePrincipal, telefoneAlternativo, email, proprietario) VALUES (?, ?, ?, ?)");
+            stmt = conexao.prepareStatement("INSERT INTO contato (telefonePrincipal, telefoneAlternativo, email) VALUES (?, ?, ?)");
             stmt.setString(1, cliente.getContato().getTelefonePrincipal());
             stmt.setString(2, cliente.getContato().getTelefoneAlternativo());
             stmt.setString(3, cliente.getContato().getEmail());
-            stmt.setString(4, cliente.getCpf());
 
             stmt.executeUpdate();
 
