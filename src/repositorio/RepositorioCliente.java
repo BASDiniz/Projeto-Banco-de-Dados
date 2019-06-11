@@ -198,23 +198,55 @@ public class RepositorioCliente implements IRepositorioCliente, Serializable{
 //        }
 //        return funcionariosEncontrados;
     }
-
+    //banco implementado
     @Override
-    public ArrayList<Cliente> listarTodosOsFuncionarios(){
+    public ArrayList<Cliente> listarTodosOsFuncionarios(){ // lista todos os funcionarios // FUNCIONANDO
         ArrayList<Cliente> funcionarios = new ArrayList<Cliente>();
 
-        for(int i = 0; i < this.listaClientes.size(); i++){
-            if(this.listaClientes.get(i) instanceof Funcionario){
-                funcionarios.add(this.listaClientes.get(i));
+        Connection conexao = ConnectionFactory.getConnection();
+        PreparedStatement stmt = null;
+        try{
+            stmt = conexao.prepareStatement("SELECT * FROM funcionario func join contato cont on func.contato = cont.email");
+            ResultSet rs = stmt.executeQuery();
 
+            while(rs.next()){
+                Contato contatoBD = new Contato (rs.getString("telefone_principal"),rs.getString("telefone_alternativo"),rs.getString("email"));
+                Funcionario clienteBD = new Funcionario(rs.getString("nome"),rs.getString("cpf"),contatoBD,rs.getString("senha"),rs.getDouble("salario"),rs.getBoolean("cargo_gerente"));
+                funcionarios.add(clienteBD);
             }
+            return funcionarios;
+        }catch (SQLException e){
+            e.getMessage();
+            e.printStackTrace();
+        }finally {
+            ConnectionFactory.closeConnection(conexao,stmt);
         }
-        return funcionarios;
+        return null;
     }
-    
+    //banco implementado
     @Override
-    public ArrayList<Cliente> listarClientesFieis() {
-        return this.clientesFieis;
+    public ArrayList<Cliente> listarClientesFieis() { // lista clientes fieis // FUNCIONANDO
+        ArrayList<Cliente> fieis = new ArrayList<Cliente>();
+
+        Connection conexao = ConnectionFactory.getConnection();
+        PreparedStatement stmt = null;
+        try{
+            stmt = conexao.prepareStatement("SELECT * FROM cliente cli join contato cont on cli.contato = cont.email WHERE fiel = true");
+            ResultSet rs = stmt.executeQuery();
+
+            while(rs.next()){
+                Contato contatoBD = new Contato (rs.getString("telefone_principal"),rs.getString("telefone_alternativo"),rs.getString("email"));
+                Cliente clienteBD = new Cliente(rs.getString("nome"),rs.getString("cpf"),contatoBD,rs.getBoolean("fiel"));
+                fieis.add(clienteBD);
+            }
+            return fieis;
+        }catch (SQLException e){
+            e.getMessage();
+            e.printStackTrace();
+        }finally {
+            ConnectionFactory.closeConnection(conexao,stmt);
+        }
+        return null;
     }
 
     @Override
@@ -235,17 +267,23 @@ public class RepositorioCliente implements IRepositorioCliente, Serializable{
 
     @Override
     public boolean verificarGerenteExistente(){
-        boolean cargoGerente = false;
-        for(int i = 0; i < this.listaClientes.size(); i++){
-            if(this.listaClientes.get(i) instanceof Funcionario) {
-                Funcionario funcionario = (Funcionario) this.listaClientes.get(i);
-                if (funcionario.getCargoGerente() == true) {
-                    cargoGerente = true;
-                    break;
-                }
+        Connection conexao = ConnectionFactory.getConnection();
+        PreparedStatement stmt = null;
+        try{
+            stmt = conexao.prepareStatement("SELECT * FROM funcionario WHERE cargo_gerente = true");
+            ResultSet rs = stmt.executeQuery();
+            if(rs.next()){
+                return true;
+            }else{
+                return false;
             }
+        }catch (SQLException e){
+            e.getMessage();
+            e.printStackTrace();
+        }finally {
+            ConnectionFactory.closeConnection(conexao,stmt);
         }
-        return cargoGerente;
+        return false;
     }
 
     // Metodo auxiliar apenas para testes
@@ -339,7 +377,7 @@ public class RepositorioCliente implements IRepositorioCliente, Serializable{
 
     public static void main(String[] args) {
         RepositorioCliente teste = new RepositorioCliente();
-
+        
     }
 }
 
