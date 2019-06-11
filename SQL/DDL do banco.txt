@@ -1,4 +1,16 @@
 create schema projeto_bd collate utf8mb4_0900_ai_ci;
+use projeto_bd;
+create table contato
+(
+	telefone_principal varchar(11) null,
+	telefone_alternativo varchar(11) null,
+	email varchar(50) not null,
+	constraint contato_email_uindex
+		unique (email)
+);
+
+alter table contato
+	add primary key (email);
 
 create table cliente
 (
@@ -6,28 +18,16 @@ create table cliente
 	nome varchar(100) default '' not null,
 	fiel tinyint(1) default 0 not null,
 	ativo tinyint(1) default 0 not null,
+	contato varchar(50) not null,
 	constraint cliente_cpf_uindex
-		unique (cpf)
+		unique (cpf),
+	constraint cliente_contato_email_fk
+		foreign key (contato) references contato (email)
+			on update cascade on delete cascade
 );
 
 alter table cliente
 	add primary key (cpf);
-
-create table contato
-(
-	telefonePrincipal varchar(11) null,
-	telefoneAlternativo varchar(11) null,
-	email varchar(50) not null,
-	proprietario varchar(11) null,
-	constraint contato_email_uindex
-		unique (email),
-	constraint contato_cliente_cpf_fk
-		foreign key (proprietario) references cliente (cpf)
-			on update cascade on delete cascade
-);
-
-alter table contato
-	add primary key (email);
 
 create table funcionario
 (
@@ -37,8 +37,13 @@ create table funcionario
 	cargo_gerente tinyint(1) default 0 not null,
 	nome varchar(100) default '' not null,
 	cpf varchar(11) not null,
+	senha varchar(50) not null,
+	contato varchar(50) not null,
 	constraint Funcionario_cpf_uindex
-		unique (cpf)
+		unique (cpf),
+	constraint funcionario_contato_email_fk
+		foreign key (contato) references contato (email)
+			on update cascade on delete cascade
 )
 comment 'Tabela de funcionario';
 

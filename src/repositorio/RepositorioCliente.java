@@ -71,25 +71,25 @@ public class RepositorioCliente implements IRepositorioCliente, Serializable{
         PreparedStatement stmt = null;
 
         try {
-            stmt = conexao.prepareStatement("INSERT INTO cliente (nome, cpf, fiel, ativo) VALUES (?, ?, ?, ?)");
-            stmt.setString(1, cliente.getNome());
-            stmt.setString(2, cliente.getCpf());
-            stmt.setBoolean(3, cliente.getFiel());
-            stmt.setBoolean(4, cliente.getAtivo());
-
-            stmt.executeUpdate();
-
-            stmt = conexao.prepareStatement("INSERT INTO contato (telefonePrincipal, telefoneAlternativo, email, proprietario) VALUES (?, ?, ?, ?)");
+            stmt = conexao.prepareStatement("INSERT INTO contato VALUES (?, ?, ?)");
             stmt.setString(1, cliente.getContato().getTelefonePrincipal());
             stmt.setString(2, cliente.getContato().getTelefoneAlternativo());
             stmt.setString(3, cliente.getContato().getEmail());
-            stmt.setString(4, cliente.getCpf());
 
             stmt.executeUpdate();
 
+            stmt = conexao.prepareStatement("INSERT INTO cliente VALUES (?, ?, ?, ?, ?)");
+            stmt.setString(1, cliente.getCpf());
+            stmt.setString(2, cliente.getNome());
+            stmt.setBoolean(3, cliente.getFiel());
+            stmt.setBoolean(4, cliente.getAtivo());
+            stmt.setString(5,cliente.getContato().getEmail());
+
+            stmt.executeUpdate();
 
         } catch (SQLException e) {
-            //e.printStackTrace();
+            System.out.println(e.getMessage());
+            e.printStackTrace();
         } finally{
             ConnectionFactory.closeConnection(conexao, stmt);
         }
@@ -119,11 +119,11 @@ public class RepositorioCliente implements IRepositorioCliente, Serializable{
         Connection conexao = ConnectionFactory.getConnection();
         PreparedStatement stmt = null;
         try{
-            stmt = conexao.prepareStatement("SELECT * FROM cliente cli join contato cont on cli.cpf = cont.proprietario WHERE cli.cpf = ?");
+            stmt = conexao.prepareStatement("SELECT * FROM cliente cli join contato cont on cli.contato = cont.email WHERE cli.cpf = ?");
             stmt.setString(1,cpf);
             ResultSet rs = stmt.executeQuery();
             if(rs.next()){
-                Contato contatoBD = new Contato (rs.getString("telefonePrincipal"),rs.getString("telefoneAlternativo"),rs.getString("email"));
+                Contato contatoBD = new Contato (rs.getString("telefone_principal"),rs.getString("telefone_alternativo"),rs.getString("email"));
                 Cliente clienteBD = new Cliente(rs.getString("nome"),rs.getString("cpf"),contatoBD);
                 return clienteBD;
             }
@@ -144,12 +144,12 @@ public class RepositorioCliente implements IRepositorioCliente, Serializable{
         Connection conexao = ConnectionFactory.getConnection();
         PreparedStatement stmt = null;
         try{
-            stmt = conexao.prepareStatement("SELECT * FROM cliente cli join contato cont on cli.cpf = cont.proprietario WHERE cli.nome = ?");
+            stmt = conexao.prepareStatement("SELECT * FROM cliente cli join contato cont on cli.contato = cont.email WHERE cli.nome = ?");
             stmt.setString(1,nome);
             ResultSet rs = stmt.executeQuery();
 
             while(rs.next()){
-                Contato contatoBD = new Contato (rs.getString("telefonePrincipal"),rs.getString("telefoneAlternativo"),rs.getString("email"));
+                Contato contatoBD = new Contato (rs.getString("telefone_principal"),rs.getString("telefone_alternativo"),rs.getString("email"));
                 Cliente clienteBD = new Cliente(rs.getString("nome"),rs.getString("cpf"),contatoBD,rs.getBoolean("fiel"));
                 clientesEncontrados.add(clienteBD);
             }
@@ -163,20 +163,40 @@ public class RepositorioCliente implements IRepositorioCliente, Serializable{
 
         return null;
     }
-
+    //banco implementado
     @Override
-    public ArrayList<Cliente> listarPorNomeFuncionario(String nome){
+    public ArrayList<Cliente> listarPorNomeFuncionario(String nome){ // lista funcionarios por nome // FUNCIONANDO
 
         ArrayList<Cliente> funcionariosEncontrados = new ArrayList<Cliente>();
+        Connection conexao = ConnectionFactory.getConnection();
+        PreparedStatement stmt = null;
+        try{
+            stmt = conexao.prepareStatement("SELECT * FROM funcionario func join contato cont on func.contato = cont.email WHERE func.nome = ?");
+            stmt.setString(1,nome);
+            ResultSet rs = stmt.executeQuery();
 
-        for (int i = 0; i < this.listaClientes.size(); i++) {
-            if (this.listaClientes.get(i) instanceof Funcionario) {
-                if (this.listaClientes.get(i).getNome().toLowerCase().startsWith(nome.toLowerCase())) {
-                    funcionariosEncontrados.add(this.listaClientes.get(i));
-                }
+            while(rs.next()){
+                Contato contatoBD = new Contato (rs.getString("telefone_principal"),rs.getString("telefone_alternativo"),rs.getString("email"));
+                Funcionario clienteBD = new Funcionario(rs.getString("nome"),rs.getString("cpf"),contatoBD,rs.getString("senha"),rs.getDouble("salario"),rs.getBoolean("cargo_gerente"));
+                funcionariosEncontrados.add(clienteBD);
             }
+            return funcionariosEncontrados;
+        }catch (SQLException e){
+            e.getMessage();
+            e.printStackTrace();
+        }finally {
+            ConnectionFactory.closeConnection(conexao,stmt);
         }
-        return funcionariosEncontrados;
+        return null;
+
+//        for (int i = 0; i < this.listaClientes.size(); i++) {
+//            if (this.listaClientes.get(i) instanceof Funcionario) {
+//                if (this.listaClientes.get(i).getNome().toLowerCase().startsWith(nome.toLowerCase())) {
+//                    funcionariosEncontrados.add(this.listaClientes.get(i));
+//                }
+//            }
+//        }
+//        return funcionariosEncontrados;
     }
 
     @Override
@@ -319,8 +339,7 @@ public class RepositorioCliente implements IRepositorioCliente, Serializable{
 
     public static void main(String[] args) {
         RepositorioCliente teste = new RepositorioCliente();
-        ArrayList<Cliente> zaga = teste.listarPorNomeCliente("Erik Jhonatta");
-        System.out.println(zaga.get(0).toString());
+
     }
 }
 
