@@ -5,8 +5,12 @@ import negocio.excecao.cliente.DadosInvalidosException;
 import negocio.excecao.cliente.contato.*;
 
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
+
 import negocio.entidade.produto.Produto;
 import negocio.excecao.venda.CarrinhoVazioException;
 import negocio.excecao.venda.ClienteInativoException;
@@ -14,7 +18,7 @@ import negocio.excecao.venda.ClienteNegadoException;
 
 /**
  * Classe que representa uma venda.
- * @author Éverton Vieira
+ * @author ï¿½verton Vieira
  * @author Bruno Diniz
  * @version 2.00
  */
@@ -31,7 +35,7 @@ public class Venda implements Serializable {
     private Calendar dataDeVenda;
 
     /**
-     * Construtor Venda com descrição
+     * Construtor Venda com descriï¿½ï¿½o
      * @param funcionario
      * @param cliente
      * @param carrinhoProdutos
@@ -52,7 +56,7 @@ public class Venda implements Serializable {
     }
 
     /**
-     * Construtor Venda sem descrição
+     * Construtor Venda sem descriï¿½ï¿½o
      * @param funcionario
      * @param cliente
      * @param carrinhoProdutos
@@ -112,10 +116,18 @@ public class Venda implements Serializable {
         return this.dataDeVenda;
     }
 
+    public void setDataDeVenda(String data) throws ParseException {
+        SimpleDateFormat sf = new SimpleDateFormat("dd/MM/yyyy");
+        Date data1 = sf.parse(data);
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(data1);
+        this.dataDeVenda = cal;
+    }
+
     // Metodos
 
     /**
-     * Método que concede uma desconto de 10% em uma venda
+     * Mï¿½todo que concede uma desconto de 10% em uma venda
      */
     public void descontarVenda() {
         this.valorTotal =  this.valorTotal - (this.valorTotal * 0.10);
@@ -123,8 +135,8 @@ public class Venda implements Serializable {
 
 
     /**
-     * Esse método verifica se todos os atributos(dados) da venda são válidos
-     * @return retorna "true" se todos os atributos(dados) forem válidos. Caso contrário retorna "false".
+     * Esse mï¿½todo verifica se todos os atributos(dados) da venda sï¿½o vï¿½lidos
+     * @return retorna "true" se todos os atributos(dados) forem vï¿½lidos. Caso contrï¿½rio retorna "false".
      * @throws DadosInvalidosException
      * @throws ContatoInvalidoException
      * @throws ClienteNegadoException
@@ -150,7 +162,7 @@ public class Venda implements Serializable {
         return true;
     }
 
-    //Método que calcular que calcula o valor total de uma venda
+    //Mï¿½todo que calcular que calcula o valor total de uma venda
 
     private double calcularValorTotal() {
 
@@ -163,7 +175,7 @@ public class Venda implements Serializable {
     }
 
     /**
-     * Método para imprimir o carrinhoProdutos (Apenas para testes)
+     * Mï¿½todo para imprimir o carrinhoProdutos (Apenas para testes)
      * @return
      */
     public String imprimirCarrinhoProdutos() {
@@ -194,7 +206,7 @@ public class Venda implements Serializable {
     }
 
     /**
-     * Sobrescrita do método equals
+     * Sobrescrita do mï¿½todo equals
      * @param obj
      * @return
      */
@@ -210,7 +222,7 @@ public class Venda implements Serializable {
     }
 
     /**
-     * Sobrescrita do método toString.
+     * Sobrescrita do mï¿½todo toString.
      * @return retorna o objeto Venda como uma string
      */
     @Override

@@ -400,8 +400,7 @@ public class RepositorioCliente implements IRepositorioCliente, Serializable{
 
     public static void main(String[] args) {
         RepositorioCliente teste = new RepositorioCliente();
-        Cliente cli = teste.buscarPorCpfFunc("11111111111");
-        System.out.println(cli.toString());
+
     }
 }
 

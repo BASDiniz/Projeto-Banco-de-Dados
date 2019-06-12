@@ -10,8 +10,10 @@ import negocio.entidade.produto.Produto;
 import java.io.*;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -34,9 +36,9 @@ public class RepositorioVenda implements IRepositorioVenda, Serializable {
         this.listaVendas = new ArrayList<Venda>();
     }
 
-
+    // banco implementado
     @Override
-    public void adicionarVenda(Venda venda){
+    public void adicionarVenda(Venda venda){ // adiciona uma venda // FUNCIONANDO
         Connection conexao = ConnectionFactory.getConnection();
         PreparedStatement stmt = null;
         Date data = venda.getDataDeVenda().getTime();
@@ -62,88 +64,195 @@ public class RepositorioVenda implements IRepositorioVenda, Serializable {
         }
     }
     
-
+    //banco implementado
     @Override
-    public double verLucroMensal(int mes){
-        double lucroMensal = 0;
-        for(int i = 0; i < this.listaVendas.size(); i++){
-            if((this.listaVendas.get(i).getDataDeVenda().get(Calendar.MONTH) + 1)  == mes){
-                lucroMensal += listaVendas.get(i).getValorTotal();
-            }
+    public double verLucroMensal(int mes){//verifica lucro mensal do mes // FUNCIONANDO
+        Connection conexao = ConnectionFactory.getConnection();
+        PreparedStatement stmt = null;
+        String str;
+        Double retorno = 0.0;
+        if(String.valueOf(mes).length() == 1){
+            str = Integer.toString(mes);
+            str = "%/0"+str+"/%";
+        }else{
+            str = Integer.toString(mes);
+            str = "%/"+str+"/%";
         }
-        return lucroMensal;
-    }
+//        Date data = venda.getDataDeVenda().getTime();
+//        DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+//        String strData = df.format(data);
+        try {
+            stmt = conexao.prepareStatement("SELECT * FROM venda WHERE dataDeVenda like ?");
+            stmt.setString(1,str);
 
+            ResultSet rs = stmt.executeQuery();
+
+            while(rs.next()){
+                retorno = retorno + rs.getDouble("valorTotal");
+            }
+            return retorno;
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            e.printStackTrace();
+        } finally{
+            ConnectionFactory.closeConnection(conexao, stmt);
+        }
+        return retorno;
+    }
+    //banco implementado
     @Override
-    public double verLucroAnual(int ano){
-        double lucroAnual = 0;
-        for (int i = 0; i < this.listaVendas.size(); i++) {
-            if (this.listaVendas.get(i).getDataDeVenda().get(Calendar.YEAR) == ano) {
-                lucroAnual += this.listaVendas.get(i).getValorTotal();
-            }
-        }
-        return lucroAnual;
-    }
+    public double verLucroAnual(int ano){ // verifica lucro anual // FUNCIONANDO
+        Connection conexao = ConnectionFactory.getConnection();
+        PreparedStatement stmt = null;
+        String str = "%/%/"+Integer.toString(ano);
+        Double retorno = 0.0;
+        try {
+            stmt = conexao.prepareStatement("SELECT * FROM venda WHERE dataDeVenda like ?");
+            stmt.setString(1,str);
 
+            ResultSet rs = stmt.executeQuery();
+
+            while(rs.next()){
+                retorno = retorno + rs.getDouble("valorTotal");
+            }
+            return retorno;
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            e.printStackTrace();
+        } finally{
+            ConnectionFactory.closeConnection(conexao, stmt);
+        }
+        return retorno;
+    }
+    //banco implementado
     @Override
-    public Funcionario determinarFuncionarioDoMes(int mes) {
-        int quantidadeDeVendas = 0;
-        int maiorQuantidadeDeVendas = 0;
-        Funcionario funcDoMes = null;
-
-        if(listaVendas.size() > 0) {
-
-            for (int i = 0; i < listaVendas.size(); i++) {
-                maiorQuantidadeDeVendas = 0;
-                for (int j = 0; j < listaVendas.size(); j++) {
-                    if (listaVendas.get(i).getFuncionario().equals(listaVendas.get(j).getFuncionario())
-                            && (listaVendas.get(i).getDataDeVenda().get(Calendar.MONTH) + 1) == mes) {
-                        maiorQuantidadeDeVendas++;
-                    }
-                }
-                if (maiorQuantidadeDeVendas > quantidadeDeVendas) {
-                    quantidadeDeVendas = maiorQuantidadeDeVendas;
-                    funcDoMes = listaVendas.get(i).getFuncionario();
-                }
+    public Funcionario determinarFuncionarioDoMes(int mes) {//retorna funcionario do mes //FUNCIONANDO
+        RepositorioCliente repCliente = FachadaGerente.getInstance().getFachadaGerente().getRepositorioCliente();
+        String str;
+        if(String.valueOf(mes).length() == 1){
+            str = Integer.toString(mes);
+            str = "%/0"+str+"/%";
+        }else{
+            str = Integer.toString(mes);
+            str = "%/"+str+"/%";
+        }
+        Connection conexao = ConnectionFactory.getConnection();
+        PreparedStatement stmt = null;
+        try {
+            stmt = conexao.prepareStatement("SELECT SUM(valorTotal),v.funcionario from funcionario f join venda v on f.cpf = v.funcionario WHERE v.dataDeVenda like ? GROUP BY  v.funcionario");
+            stmt.setString(1,str);
+            ResultSet rs = stmt.executeQuery();
+            if(rs.next()){
+                return (Funcionario) repCliente.buscarPorCpfFunc(rs.getString("funcionario"));
             }
-        }
 
-        if (funcDoMes != null){
-            funcDoMes.setFuncDoMes(true);
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            e.printStackTrace();
+        } finally{
+            ConnectionFactory.closeConnection(conexao, stmt);
         }
-        return funcDoMes;
+        return null;
+
+//        if(listaVendas.size() > 0) {
+//
+//            for (int i = 0; i < listaVendas.size(); i++) {
+//                maiorQuantidadeDeVendas = 0;
+//                for (int j = 0; j < listaVendas.size(); j++) {
+//                    if (listaVendas.get(i).getFuncionario().equals(listaVendas.get(j).getFuncionario())
+//                            && (listaVendas.get(i).getDataDeVenda().get(Calendar.MONTH) + 1) == mes) {
+//                        maiorQuantidadeDeVendas++;
+//                    }
+//                }
+//                if (maiorQuantidadeDeVendas > quantidadeDeVendas) {
+//                    quantidadeDeVendas = maiorQuantidadeDeVendas;
+//                    funcDoMes = listaVendas.get(i).getFuncionario();
+//                }
+//            }
+//        }
+//
+//        if (funcDoMes != null){
+//            funcDoMes.setFuncDoMes(true);
+//        }
+//        return funcDoMes;
     }
-
+    //banco implementado
     @Override
-    public Cliente determinarClienteFiel(int mes) {
-
-        double valorGasto = 0;
-        double maiorGastoEncontrado = 0;
-        Cliente clienteFiel = null;
-
-        for(int i = 0; i < listaVendas.size(); i++) {
-
-            valorGasto = 0;
-
-            for(int k = 0; k < listaVendas.size(); k++) {
-
-                if(listaVendas.get(i).getCliente().equals(listaVendas.get(k).getCliente()) && listaVendas.get(i).getDataDeVenda().get(Calendar.MONTH) + 1 == mes) {
-                    valorGasto += listaVendas.get(k).getValorTotal();
-                }
-            }
-
-            if(valorGasto > maiorGastoEncontrado) {
-                maiorGastoEncontrado = valorGasto;
-                clienteFiel = listaVendas.get(i).getCliente();
-            }
+    public Cliente determinarClienteFiel(int mes) { // retorna o cliente fiel // FUNCIONANDO
+        RepositorioCliente repCliente = FachadaGerente.getInstance().getFachadaGerente().getRepositorioCliente();
+        String str;
+        if(String.valueOf(mes).length() == 1){
+            str = Integer.toString(mes);
+            str = "%/0"+str+"/%";
+        }else{
+            str = Integer.toString(mes);
+            str = "%/"+str+"/%";
         }
-        return clienteFiel;
-    }
+        Connection conexao = ConnectionFactory.getConnection();
+        PreparedStatement stmt = null;
+        try {
+            stmt = conexao.prepareStatement("SELECT SUM(valorTotal),v.cliente from cliente c join venda v on c.cpf = v.cliente WHERE v.dataDeVenda like ? GROUP BY  v.cliente");
+            stmt.setString(1,str);
+            ResultSet rs = stmt.executeQuery();
+            if(rs.next()){
+                return repCliente.buscarPorCpf(rs.getString("cliente"));
+            }
 
-    public ArrayList<Venda> returnAllVendas(){
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            e.printStackTrace();
+        } finally{
+            ConnectionFactory.closeConnection(conexao, stmt);
+        }
+        return null;
+//        double valorGasto = 0;
+//        double maiorGastoEncontrado = 0;
+//        Cliente clienteFiel = null;
+//
+//        for(int i = 0; i < listaVendas.size(); i++) {
+//
+//            valorGasto = 0;
+//
+//            for(int k = 0; k < listaVendas.size(); k++) {
+//
+//                if(listaVendas.get(i).getCliente().equals(listaVendas.get(k).getCliente()) && listaVendas.get(i).getDataDeVenda().get(Calendar.MONTH) + 1 == mes) {
+//                    valorGasto += listaVendas.get(k).getValorTotal();
+//                }
+//            }
+//
+//            if(valorGasto > maiorGastoEncontrado) {
+//                maiorGastoEncontrado = valorGasto;
+//                clienteFiel = listaVendas.get(i).getCliente();
+//            }
+//        }
+//        return clienteFiel;
+    }
+    //banco implementado
+    public ArrayList<Venda> returnAllVendas(){// retorna todas as venda // FUNCIONANDO
         ArrayList<Venda> retorno = new ArrayList<Venda>();
-        for (Venda item:this.listaVendas) {
-            retorno.add(item);
+        ArrayList<Produto> carrinho = new ArrayList<>();
+        RepositorioCliente repCliente = FachadaGerente.getInstance().getFachadaGerente().getRepositorioCliente();
+        Connection conexao = ConnectionFactory.getConnection();
+        PreparedStatement stmt = null;
+        try {
+
+            stmt = conexao.prepareStatement("SELECT * FROM venda");
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()){
+                Cliente cliente = repCliente.buscarPorCpf(rs.getString("cliente"));
+                Funcionario funcionario = (Funcionario) repCliente.buscarPorCpfFunc(rs.getString("funcionario"));
+                Venda venda = new Venda(funcionario,cliente,carrinho,rs.getString("descricao"),rs.getBoolean("pagamentoParcelado"));
+                venda.setDataDeVenda(rs.getString("dataDeVenda"));
+                retorno.add(venda);
+            }
+            return retorno;
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            e.printStackTrace();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        } finally{
+            ConnectionFactory.closeConnection(conexao, stmt);
         }
         return retorno;
     }
@@ -266,14 +375,18 @@ public class RepositorioVenda implements IRepositorioVenda, Serializable {
     }
 
     public static void main(String[] args) {
-        Contato c1 = new Contato("87999429191","87996691842","erik@hotmail.com");
-        Contato c2 = new Contato("87999999999","87888888888","erik2@hotmail.com");
-        Funcionario f = new Funcionario("Erik","7037887614",c1,"123123",1000,false);
-        Cliente cli = new Cliente("ErikCliente","11111111111",c2,false);
-        ArrayList<Produto> car = new ArrayList<>();
-        Produto p = new Produto("5","camisa","Camisa para testes","infantil","Unissex","azul","PP","dormir",50,100);
-        car.add(p);
-        Venda v = new Venda(f,cli,car,"Venda somente para testes",false);
+//        Contato c1 = new Contato("87999429191","87996691842","erik@hotmail.com");
+//        Contato c2 = new Contato("87999999999","87888888888","erik2@hotmail.com");
+//        Funcionario f = new Funcionario("Erik","11111111111",c1,"123123",1000,false);
+//        Cliente cli = new Cliente("Erik Jhonatta","70378876414",c2,false);
+//        ArrayList<Produto> car = new ArrayList<>();
+//        Produto p = new Produto("5","camisa","Camisa para testes","infantil","Unissex","azul","PP","dormir",50,100);
+//        car.add(p);
+//        Venda v = new Venda(f,cli,car,"Venda somente para testes",false);
+//
+        RepositorioVenda rep = new RepositorioVenda();
+//        rep.adicionarVenda(v);
 
+        System.out.println(rep.returnAllVendas().get(0));
     }
 }
