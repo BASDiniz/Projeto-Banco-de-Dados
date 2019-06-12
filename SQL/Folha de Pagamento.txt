@@ -1,8 +1,0 @@
-create table folha_de_pagamento
-(
-	salarioComBonificacao double default 0.0 not null,
-	funcionario varchar(11) default '' null,
-	constraint folha_de_pagamento_funcionario_cpf_fk
-		foreign key (funcionario) references funcionario (cpf)
-			on update cascade on delete cascade
-);

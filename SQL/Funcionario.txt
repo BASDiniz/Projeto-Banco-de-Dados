@@ -1,18 +1,20 @@
-create table Funcionario
+create table funcionario
 (
-	salarioComBonificacao double default 0.0 not null,
-	funcDoMes boolean default false not null,
-	salario double default 0.0 not null,
-	cargo_gerente boolean default false not null,
+	salarioComBonificacao double default 0 not null,
+	funcDoMes tinyint(1) default 0 not null,
+	salario double default 0 not null,
+	cargo_gerente tinyint(1) default 0 not null,
 	nome varchar(100) default '' not null,
-	cpf varchar(11) not null
+	cpf varchar(11) not null,
+	senha varchar(50) not null,
+	contato varchar(50) not null,
+	constraint Funcionario_cpf_uindex
+		unique (cpf),
+	constraint funcionario_contato_email_fk
+		foreign key (contato) references contato (email)
+			on update cascade on delete cascade
 )
 comment 'Tabela de funcionario';
 
-create unique index Funcionario_cpf_uindex
-	on Funcionario (cpf);
-
-alter table Funcionario
-	add constraint Funcionario_pk
-		primary key (cpf);
-
+alter table funcionario
+	add primary key (cpf);

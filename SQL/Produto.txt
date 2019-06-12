@@ -4,21 +4,21 @@ create table produto
 	tipo_de_roupa varchar(20) not null,
 	desc_produto varchar(100) null,
 	faixa_etaria varchar(30) not null,
-	valor_venda double default 0.0 not null,
+	valor_venda double default 0 not null,
 	genero varchar(50) not null,
 	quantidade int not null,
 	cor varchar(100) not null,
-	ativo boolean default true not null,
+	ativo tinyint(1) default 1 not null,
 	column_10 int null,
 	categoria varchar(100) not null,
-	tamanho varchar(5) not null
+	tamanho varchar(5) not null,
+	venda int default -1 null,
+	constraint produto_codigo_uindex
+		unique (codigo),
+	constraint produto_venda_codigo_fk
+		foreign key (venda) references venda (codigo)
+			on update cascade on delete set null
 );
 
-
-create unique index produto_codigo_uindex
-	on produto (codigo);
-
 alter table produto
-	add constraint produto_pk
-		primary key (codigo);
-
+	add primary key (codigo);
