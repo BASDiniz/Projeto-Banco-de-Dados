@@ -106,3 +106,10 @@ create table produto
 alter table produto
 	add primary key (codigo);
 
+INSERT INTO contato VALUES ('87996691842','87999429191','erikjhonatta@gmail.com');
+INSERT INTO contato VALUES ('87996699999','87999411111','erikjhonatta@hotmail.com');
+
+INSERT INTO funcionario VALUES (0,0,1000.0,1,'Erik Gerente','11111111111','123123','erikjhonatta@gmail.com');
+INSERT INTO cliente VALUES ('70378876414','Erik Cliente',1,1,'erikjhonatta@hotmail.com');
+
+INSERT INTO venda VALUES ('01/08/2000',-1,0.0,0,'Venda para armazenar produtos que nao estao em vendas','70378876414','11111111111');
