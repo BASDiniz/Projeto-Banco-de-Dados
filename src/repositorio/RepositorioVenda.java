@@ -1,6 +1,8 @@
 package repositorio;
 
+import com.mysql.cj.protocol.Resultset;
 import connection.ConnectionFactory;
+import fachada.FachadaGerente;
 import interfaces.IRepositorioVenda;
 import negocio.entidade.*;
 import negocio.entidade.produto.Produto;

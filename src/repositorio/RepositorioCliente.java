@@ -136,6 +136,7 @@ public class RepositorioCliente implements IRepositorioCliente, Serializable{
         }
         return null;
     }
+
     public Cliente buscarPorCpfFunc(String cpf){
         Connection conexao = ConnectionFactory.getConnection();
         PreparedStatement stmt = null;
@@ -157,6 +158,7 @@ public class RepositorioCliente implements IRepositorioCliente, Serializable{
         }
         return null;
     }
+
     //banco implementado
     @Override
     public ArrayList<Cliente> listarPorNomeCliente(String nome) { // lista cliente com o nome passado // FUNCIONANDO
@@ -275,7 +277,6 @@ public class RepositorioCliente implements IRepositorioCliente, Serializable{
         this.listaClientes.set(indiceCliente, Cliente);
     }
 
-
     @Override
     public void desabilitarCliente(int indiceCliente) {
         this.listaClientes.get(indiceCliente).setAtivo(false);
@@ -286,6 +287,7 @@ public class RepositorioCliente implements IRepositorioCliente, Serializable{
         this.listaClientes.get(indiceCliente).setAtivo(true);
     }
 
+    //banco implementado
     @Override
     public boolean verificarGerenteExistente(){
         Connection conexao = ConnectionFactory.getConnection();

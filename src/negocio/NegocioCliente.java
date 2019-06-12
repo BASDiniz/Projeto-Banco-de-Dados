@@ -1,6 +1,5 @@
 package negocio;
 
-import dados.DbCliente;
 import interfaces.IRepositorioCliente;
 import negocio.entidade.Cliente;
 import negocio.excecao.cliente.ClienteJaCadastradoException;
@@ -14,18 +13,16 @@ import repositorio.RepositorioVenda;
 import java.util.ArrayList;
 
 public class NegocioCliente {
-    private DbCliente dbCliente;
     private RepositorioCliente repositorioCliente;
 
-    public NegocioCliente(DbCliente dbCliente, RepositorioCliente repositorioCliente) {
-        this.dbCliente = dbCliente;
+    public NegocioCliente(RepositorioCliente repositorioCliente) {
         this.repositorioCliente = repositorioCliente;
     }
 
     public void adicionarCliente(Cliente cliente) throws DadosInvalidosException, ContatoInvalidoException, ClienteJaCadastradoException {
 
-        if(this.dbCliente.procurarCliente(cliente) == null && cliente.verificarDados() == true) {
-            this.dbCliente.adicionarCliente(cliente);
+        if(this.repositorioCliente.procurarCliente(cliente) == -1 && cliente.verificarDados() == true) {
+            this.repositorioCliente.adicionarCliente(cliente);
         }
         else {
             throw new ClienteJaCadastradoException();

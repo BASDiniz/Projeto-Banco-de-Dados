@@ -1,7 +1,12 @@
 package repositorio;
 
+import connection.ConnectionFactory;
+import fachada.FachadaGerente;
 import negocio.entidade.produto.Produto;
 import interfaces.IRepositorioProduto;
+import negocio.excecao.produto.ProdutoInvalidoException;
+import negocio.excecao.produto.ProdutoJaCadastradoException;
+
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -9,6 +14,10 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 /**
@@ -26,40 +35,77 @@ public class RepositorioProduto implements IRepositorioProduto, Serializable {
     public RepositorioProduto() {
         this.listaProdutos = new ArrayList<Produto>();
     }
-    
+
+    //Implementado no banco
     @Override
     public int procurarProduto(Produto produto) {
-         
-        for(int i = 0; i < this.listaProdutos.size(); i++) {
-            
-            if(this.listaProdutos.get(i).equals(produto)) {
-                
-                if(this.listaProdutos.get(i).getAtivo() == true) {
-                    return i;
+
+        Connection conexao = ConnectionFactory.getConnection();
+        PreparedStatement stmt = null;
+
+        try {
+            stmt = conexao.prepareStatement("SELECT * FROM produto WHERE codigo = ? AND genero = ? AND cor = ? AND tamanho = ? ");
+            stmt.setString(1, produto.getCodigo());
+            stmt.setString(2, produto.getGenero());
+            stmt.setString(3, produto.getCor());
+            stmt.setString(4, produto.getTamanho());
+            ResultSet rs = stmt.executeQuery();
+            if(rs.next()){
+                if(rs.getInt("ativo") == 1){
+                    return 1;
                 }
-                
             }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }finally{
+            ConnectionFactory.closeConnection(conexao, stmt);
         }
         return -1;
     }
-    
+
+    //Implementado no banco
     @Override 
     public void adicionarProduto(Produto produto) {
+        Connection conexao = ConnectionFactory.getConnection();
+        PreparedStatement stmt = null;
+
+        try {
+            stmt = conexao.prepareStatement("INSERT INTO produto VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+            stmt.setString(1, produto.getCodigo());
+            stmt.setString(2, produto.getTipoDeRoupa());
+            stmt.setString(3, produto.getDescricaoDoProduto());
+            stmt.setString(4, produto.getFaixaEtaria());
+            stmt.setDouble(5, produto.getValorVenda());
+            stmt.setString(6, produto.getGenero());
+            stmt.setInt(7, produto.getQuantidade());
+            stmt.setString(8, produto.getCor());
+            stmt.setBoolean(9, produto.getAtivo());
+            stmt.setString(10, produto.getCategoria());
+            stmt.setString(11, produto.getTamanho());
+            stmt.setInt(12, -1);
+
+            stmt.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }finally{
+            ConnectionFactory.closeConnection(conexao, stmt);
+        }
+
         this.listaProdutos.add(produto);
     }
     
     @Override
     public Produto buscarProdutoPorCodigo(String codigo) {
         
-        for(int i = 0; i < this.listaProdutos.size(); i++) {
-            
-            if(this.listaProdutos.get(i).getAtivo() == true) { //////////////////////
-             
-                if(this.listaProdutos.get(i).getCodigo().equals(codigo)) {
-                    return this.listaProdutos.get(i);
-                }
-            }
-        }
+//        for(int i = 0; i < this.listaProdutos.size(); i++) {
+//
+//            if(this.listaProdutos.get(i).getAtivo() == true) { //////////////////////
+//                if(this.listaProdutos.get(i).getCodigo().equals(codigo)) {
+//                    return this.listaProdutos.get(i);
+//                }
+//            }
+//        }
         return null;
     }
     
@@ -120,9 +166,7 @@ public class RepositorioProduto implements IRepositorioProduto, Serializable {
         ArrayList<Produto> produtosEncontrados = new ArrayList();
         
         for(int i = 0; i < this.listaProdutos.size(); i++) {
-            
-            if(this.listaProdutos.get(i).getAtivo() == true) { //////////////////////
-                
+            if(this.listaProdutos.get(i).getAtivo() == true) {
                 if(this.listaProdutos.get(i).getCategoria().toLowerCase().equals(categoria.toLowerCase())){
                     produtosEncontrados.add(this.listaProdutos.get(i));
                 }
@@ -181,6 +225,16 @@ public class RepositorioProduto implements IRepositorioProduto, Serializable {
         catch (IOException ioException) {    
         } 
         catch (ClassNotFoundException classNotFound) {
+        }
+    }
+
+    public static void main(String[] args){
+        try {
+            FachadaGerente.getInstance().getFachadaGerente().adicionarProduto("12345", "saia", "Calça azul com verde", "juvenil", "masculino", "azul", "p", "dormir", 20, 245.50);
+        } catch (ProdutoInvalidoException e) {
+            e.printStackTrace();
+        } catch (ProdutoJaCadastradoException e) {
+            e.printStackTrace();
         }
     }
     
