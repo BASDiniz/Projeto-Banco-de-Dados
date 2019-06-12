@@ -1,5 +1,7 @@
 package repositorio;
 
+import fachada.FachadaFuncionario;
+import fachada.FachadaGerente;
 import interfaces.IRepositorioVenda;
 import negocio.entidade.*;
 import negocio.entidade.produto.Produto;
