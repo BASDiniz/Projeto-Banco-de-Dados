@@ -92,11 +92,7 @@ public class FXMLConteudoMenuHamburguerController implements Initializable {
     }
 
     @FXML
-    private void salvarESair(ActionEvent event) {
-
-        FachadaGerente fachada = FachadaGerente.getInstance();
-        fachada.getFachadaGerente().salvarDados();
-
+    private void sair(ActionEvent event) {
         System.exit(0);
     }
 }

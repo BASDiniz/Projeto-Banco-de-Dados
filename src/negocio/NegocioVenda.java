@@ -199,20 +199,4 @@ public class NegocioVenda {
             }
         }
     }
-
-    /**
-     * M�todo que salva os dados do repositorioVenda
-     */
-    public void salvarDados(){
-        this.repositorioVenda.salvarDados();
-
-    }
-
-    /**
-     * M�todo que faz a leitura dos dados do repositorioVenda
-     */
-    public void lerDados(){
-        this.repositorioVenda.lerDados();
-    }
-
 }

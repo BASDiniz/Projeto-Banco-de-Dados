@@ -66,7 +66,7 @@ public class RepositorioCliente implements IRepositorioCliente, Serializable{
         }finally {
             ConnectionFactory.closeConnection(conexao,stmt);
         }
-    return -1;
+        return -1;
     }
 
     // banco implementado
@@ -142,7 +142,8 @@ public class RepositorioCliente implements IRepositorioCliente, Serializable{
         return null;
     }
 
-    public Cliente buscarPorCpfFunc(String cpf){
+    @Override
+    public Funcionario buscarPorCpfFunc(String cpf){
         Connection conexao = ConnectionFactory.getConnection();
         PreparedStatement stmt = null;
         try{
@@ -151,8 +152,8 @@ public class RepositorioCliente implements IRepositorioCliente, Serializable{
             ResultSet rs = stmt.executeQuery();
             if(rs.next()){
                 Contato contatoBD = new Contato (rs.getString("telefone_principal"),rs.getString("telefone_alternativo"),rs.getString("email"));
-                Cliente clienteBD = new Funcionario(rs.getString("nome"),rs.getString("cpf"),contatoBD,rs.getString("senha"),rs.getDouble("salario"),rs.getBoolean("cargo_gerente"));
-                return clienteBD;
+                Funcionario funcEncontrado = new Funcionario(rs.getString("nome"),rs.getString("cpf"),contatoBD,rs.getString("senha"),rs.getDouble("salario"),rs.getBoolean("cargo_gerente"));
+                return funcEncontrado;
             }
 
         }catch (SQLException e){
@@ -320,57 +321,6 @@ public class RepositorioCliente implements IRepositorioCliente, Serializable{
             System.out.println(this.listaClientes.get(i) + "\n");
         }
     }
-
-    @Override
-    public void salvarDados() {
-        try{
-            FileOutputStream file = new FileOutputStream("listaClientes.dat");
-            ObjectOutputStream os = new ObjectOutputStream(file);
-            os.writeObject(this.listaClientes);
-            os.close();
-        }catch(IOException ioException){
-
-        }
-
-    }
-
-    @Override
-    public void lerDados(){
-//        try{
-//            Connection conexao = ConnectionFactory.getConnection();
-//            PreparedStatement stmt = null;
-//
-//            stmt = conexao.prepareStatement()
-//        }catch (SQLException e){
-//            e.getMessage();
-//            e.printStackTrace();
-//        }finally {
-//            ConnectionFactory.closeConnection(conexao,stmt);
-//        }
-//        try{
-//            FileInputStream file = new FileInputStream("listaClientes.dat");
-//            ObjectInputStream is = new ObjectInputStream(file);
-//            ArrayList<Cliente> listaClientes = (ArrayList<Cliente>) is.readObject();
-//            this.listaClientes = listaClientes;
-//            for (Cliente item:listaClientes) {
-//                System.out.println('k');
-//                System.out.println(item.getCpf());
-//            }
-//            is.close();
-//
-//        }
-//        catch (FileNotFoundException fileNotFound) {
-//
-//        }
-//        catch (IOException ioException) {
-//            ioException.getMessage();
-//            ioException.printStackTrace();
-//        }
-//        catch (ClassNotFoundException classNotFound) {
-//
-//        }
-
-    }
     
     @Override
     public void salvarDadosFieis() {
@@ -409,12 +359,14 @@ public class RepositorioCliente implements IRepositorioCliente, Serializable{
             FachadaGerente.getInstance().getFachadaGerente().getRepositorioCliente().adicionarFuncionario(func);
     }
 
-    public int procurarFuncionario(Cliente cliente){
+    //Implementado no banco
+    @Override
+    public int procurarFuncionario(Funcionario func){
         Connection conexao = ConnectionFactory.getConnection();
         PreparedStatement stmt = null;
         try{
             stmt = conexao.prepareStatement("SELECT * FROM funcionario WHERE cpf = ? ");
-            stmt.setString(1,cliente.getCpf());
+            stmt.setString(1, func.getCpf());
             ResultSet rs = stmt.executeQuery();
             if (rs.next()) {
                 if (rs.getInt("ativo") == 1) {
@@ -430,6 +382,8 @@ public class RepositorioCliente implements IRepositorioCliente, Serializable{
         return -1;
     }
 
+    //Implementado no banco
+    @Override
     public void adicionarFuncionario(Funcionario func){
         Connection conexao = ConnectionFactory.getConnection();
         PreparedStatement stmt = null;

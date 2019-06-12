@@ -9,8 +9,8 @@ import negocio.excecao.produto.ProdutoNaoEncontradoException;
 import java.util.ArrayList;
 
 /**
- * Classe de Negócio Produto.
- * @author Éverton Vieira
+ * Classe de Negï¿½cio Produto.
+ * @author ï¿½verton Vieira
  */
 public class NegocioProduto {
 
@@ -21,7 +21,7 @@ public class NegocioProduto {
     }
 
     /**
-     * Método que adiciona um produto.
+     * Mï¿½todo que adiciona um produto.
      * @param produto
      * @throws ProdutoInvalidoException
      * @throws ProdutoJaCadastradoException
@@ -38,7 +38,7 @@ public class NegocioProduto {
     }
 
     /**
-     * Método que busca um produto por código
+     * Mï¿½todo que busca um produto por cï¿½digo
      * @param codigo
      * @return retorna o produto encontrado.
      * @throws ProdutoNaoEncontradoException
@@ -56,7 +56,7 @@ public class NegocioProduto {
         }
     }
 
-    // Método axiliar para métodos de listagem de produtos
+    // Mï¿½todo axiliar para mï¿½todos de listagem de produtos
     private ArrayList<Produto> listarProdutos(ArrayList<Produto> metodo) throws ProdutoNaoEncontradoException {
 
         ArrayList<Produto> produtosEncontrados = metodo;
@@ -71,7 +71,7 @@ public class NegocioProduto {
     }
 
     /**
-     * Método que lista os produtos pelo seu tipo
+     * Mï¿½todo que lista os produtos pelo seu tipo
      * @param tipo
      * @return retorna um ArraList com os produtos encontrados
      * @throws ProdutoNaoEncontradoException
@@ -81,7 +81,7 @@ public class NegocioProduto {
     }
 
     /**
-     * Método que lista os produtos pela sua descrição
+     * Mï¿½todo que lista os produtos pela sua descriï¿½ï¿½o
      * @param descricao
      * @return retorna um ArraList com os produtos encontrados
      * @throws ProdutoNaoEncontradoException
@@ -91,7 +91,7 @@ public class NegocioProduto {
     }
 
     /**
-     * Método que lista os produtos pela sua faixa etária
+     * Mï¿½todo que lista os produtos pela sua faixa etï¿½ria
      * @param faixaEtaria
      * @return retorna um ArraList com os produtos encontrados
      * @throws ProdutoNaoEncontradoException
@@ -101,7 +101,7 @@ public class NegocioProduto {
     }
 
     /**
-     * Método que lista os produtos pela sua categoria
+     * Mï¿½todo que lista os produtos pela sua categoria
      * @param categoria
      * @return retorna um ArraList com os produtos encontrados
      * @throws ProdutoNaoEncontradoException
@@ -111,7 +111,7 @@ public class NegocioProduto {
     }
 
     /**
-     * Método que altera um produto
+     * Mï¿½todo que altera um produto
      * @param produto
      * @throws ProdutoInvalidoException
      */
@@ -128,7 +128,7 @@ public class NegocioProduto {
     }
 
     /**
-     * Método que desabilita um produto
+     * Mï¿½todo que desabilita um produto
      * @param produto
      */
     public void desabilitarProduto(Produto produto) {
@@ -139,19 +139,4 @@ public class NegocioProduto {
             this.repositorioProduto.desabilitarProduto(indiceProduto);
         }
     }
-
-    /**
-     * Método que salva os dados do RepositorioProduto
-     */
-    public void salvarDados() {
-        this.repositorioProduto.salvarDados();
-    }
-
-    /**
-     * Método que faz a leitura dos dados do RepositorioProduto
-     */
-    public void lerDados() {
-        this.repositorioProduto.lerDados();
-    }
-
 }

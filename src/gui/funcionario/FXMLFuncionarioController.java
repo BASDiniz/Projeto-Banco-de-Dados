@@ -133,7 +133,7 @@ public class FXMLFuncionarioController implements Initializable {
 
             if(this.busca.getValue().equals("CPF")){
                 try {
-                    Funcionario funcionario = fachada.buscarPorCpf(this.pesquisa.getText());
+                    Funcionario funcionario = fachada.getFachadaGerente().buscarPorCpfFunc(this.pesquisa.getText());
 
                     this.tabela.setItems(FXCollections.observableArrayList(funcionario));
 

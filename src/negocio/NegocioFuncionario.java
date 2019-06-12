@@ -39,12 +39,12 @@ public class NegocioFuncionario {
 
         if(funcionario instanceof Funcionario){
             Funcionario funcionario1 = (Funcionario) funcionario;
-            if (this.repositorioCliente.procurarCliente(funcionario1) == -1 && funcionario1.verificarDados()) {
+            if (this.repositorioCliente.procurarFuncionario(funcionario1) == -1 && funcionario1.verificarDados()) {
                 if (funcionario1.getCargoGerente() == false) { // se nao for gerente
-                    this.repositorioCliente.adicionarCliente(funcionario1);
+                    this.repositorioCliente.adicionarFuncionario(funcionario1);
                 }
                 else if(!repositorioCliente.verificarGerenteExistente()){
-                    this.repositorioCliente.adicionarCliente(funcionario1);
+                    this.repositorioCliente.adicionarFuncionario(funcionario1);
                 }
                 else{
                     throw new GerenteJaCadastradoException();
@@ -190,7 +190,7 @@ public class NegocioFuncionario {
      */
     public Funcionario logar(String cpf, String senha) throws FuncionarioNaoCadastradoException,
             SenhaIncorretaException, FuncionarioInativoException {
-        Funcionario funcionario = buscarPorCpf(cpf);
+        Funcionario funcionario = buscarPorCpfFunc(cpf);
 
         if(funcionario.getSenha().equals(senha)) {
             funcionarioLogado = funcionario;
@@ -200,17 +200,24 @@ public class NegocioFuncionario {
         }
     }
 
-    /**
-     * M�todo para salvar os dados do repositorioCliente
-     */
-    public void salvarDados(){
-        this.repositorioCliente.salvarDados();
-    }
+    public Funcionario buscarPorCpfFunc(String cpf) throws FuncionarioNaoCadastradoException,
+            FuncionarioInativoException {
 
-    /**
-     * M�todo para fazer a leitura dos dados do repositorioCliente
-     */
-    public void lerDados(){
-        this.repositorioCliente.lerDados();
+        Cliente cliente = this.repositorioCliente.buscarPorCpfFunc(cpf);
+        Funcionario funcionario = null;
+
+        if(cliente instanceof Funcionario){
+            funcionario = (Funcionario) cliente;
+        }
+        if (funcionario == null) {
+            throw new FuncionarioNaoCadastradoException();
+        }
+        else if(!funcionario.getAtivo()){
+            throw new FuncionarioInativoException();
+        }
+        else {
+            return funcionario;
+
+        }
     }
 }

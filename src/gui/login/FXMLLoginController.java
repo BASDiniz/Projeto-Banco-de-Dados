@@ -59,9 +59,6 @@ public class FXMLLoginController implements Initializable {
 
         try {
             FachadaFuncionario fachadaFuncionario = FachadaFuncionario.getInstance();
-            fachadaFuncionario.lerDados();
-
-
             Funcionario funcionario = fachadaFuncionario.logar(cpf, senha);
 
             if(funcionario.getCargoGerente()){

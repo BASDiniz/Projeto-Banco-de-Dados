@@ -116,20 +116,6 @@ public class NegocioCliente {
             this.repositorioCliente.habilitarCliente(indiceCliente);
         }
     }
-
-    /**
-     * M�todo que salva os dados do RepositorioCliente
-     */
-    public void salvarDados() {
-        this.repositorioCliente.salvarDados();
-    }
-
-    /**
-     * M�todo que faz a leitura dos do RepositorioCliente
-     */
-    public void lerDados() {
-        this.repositorioCliente.lerDados();
-    }
     
     public void salvarDadosFieis() {
         this.repositorioCliente.salvarDadosFieis();

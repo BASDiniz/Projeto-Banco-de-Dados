@@ -406,24 +406,7 @@ public class FachadaFuncionario{
         this.negocioVenda.checarDiaDoClienteFiel(this.repositorioCliente = RepositorioCliente.getInstance());
     }
 
-    /**
-     * M?todo que salva os dados dos neg?cios
-     */
-    public void salvarDados(){
-        this.negocioCliente.salvarDados();
-        this.negocioCliente.salvarDadosFieis();
-        this.negocioProduto.salvarDados();
-        this.negocioVenda.salvarDados();
+    public Funcionario buscarPorCpfFunc(String cpf) throws FuncionarioNaoCadastradoException, FuncionarioInativoException {
+        return this.negocioFuncionario.buscarPorCpfFunc(cpf);
     }
-
-    /**
-     * M?todo que faz a leitura dos dados dos neg?cios
-     */
-    public void lerDados(){
-        this.negocioCliente.lerDados();
-        this.negocioCliente.lerDadosFieis();
-        this.negocioProduto.lerDados();
-        this.negocioVenda.lerDados();
-    }
-
 }

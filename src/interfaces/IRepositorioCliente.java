@@ -1,6 +1,8 @@
 package interfaces;
 
 import negocio.entidade.Cliente;
+import negocio.entidade.Funcionario;
+
 import java.util.ArrayList;
 
 public interface IRepositorioCliente {
@@ -48,10 +50,6 @@ public interface IRepositorioCliente {
     ArrayList<Cliente> listarPorNomeCliente(String nome);
 
     ArrayList<Cliente> listarPorNomeFuncionario(String nome);
-
-    void salvarDados();
-
-    void lerDados();
     
     void salvarDadosFieis();
     
@@ -62,5 +60,11 @@ public interface IRepositorioCliente {
     void adicionarClienteFiel(Cliente cliente);
     
     ArrayList<Cliente> listarClientesFieis();
+
+    int procurarFuncionario(Funcionario func);
+
+    void adicionarFuncionario(Funcionario func);
+
+    Funcionario buscarPorCpfFunc(String cpf);
     
 }
