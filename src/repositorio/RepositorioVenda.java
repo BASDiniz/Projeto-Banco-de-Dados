@@ -1,14 +1,21 @@
 package repositorio;
 
-import fachada.FachadaFuncionario;
+import com.mysql.cj.protocol.Resultset;
+import connection.ConnectionFactory;
 import fachada.FachadaGerente;
 import interfaces.IRepositorioVenda;
 import negocio.entidade.*;
 import negocio.entidade.produto.Produto;
 
 import java.io.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 
 /**
  * Esta classe realizar opera��es CRUD com objetos do tipo Venda.
@@ -30,7 +37,29 @@ public class RepositorioVenda implements IRepositorioVenda, Serializable {
 
     @Override
     public void adicionarVenda(Venda venda){
-        this.listaVendas.add(venda);
+        Connection conexao = ConnectionFactory.getConnection();
+        PreparedStatement stmt = null;
+        Date data = venda.getDataDeVenda().getTime();
+        DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+        String strData = df.format(data);
+        try {
+
+            stmt = conexao.prepareStatement("INSERT INTO venda VALUES (?, ?, ?, ?, ?, ?, ?)");
+            stmt.setString(1,strData);
+            stmt.setInt(2,venda.getCodigo());
+            stmt.setDouble(3,venda.getValorTotal());
+            stmt.setBoolean(4,venda.getPagamenteParcelado());
+            stmt.setString(5,venda.getDescricao());
+            stmt.setString(6,venda.getCliente().getCpf());
+            stmt.setString(7,venda.getFuncionario().getCpf());
+            stmt.executeUpdate();
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            e.printStackTrace();
+        } finally{
+            ConnectionFactory.closeConnection(conexao, stmt);
+        }
     }
     
 
@@ -234,5 +263,17 @@ public class RepositorioVenda implements IRepositorioVenda, Serializable {
         } catch (ClassNotFoundException classNotFound) {
 
         }
+    }
+
+    public static void main(String[] args) {
+        Contato c1 = new Contato("87999429191","87996691842","erik@hotmail.com");
+        Contato c2 = new Contato("87999999999","87888888888","erik2@hotmail.com");
+        Funcionario f = new Funcionario("Erik","7037887614",c1,"123123",1000,false);
+        Cliente cli = new Cliente("ErikCliente","11111111111",c2,false);
+        ArrayList<Produto> car = new ArrayList<>();
+        Produto p = new Produto("5","camisa","Camisa para testes","infantil","Unissex","azul","PP","dormir",50,100);
+        car.add(p);
+        Venda v = new Venda(f,cli,car,"Venda somente para testes",false);
+
     }
 }
