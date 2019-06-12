@@ -9,10 +9,15 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import connection.ConnectionFactory;
+import fachada.FachadaGerente;
 import interfaces.IRepositorioCliente;
 import negocio.entidade.Cliente;
 import negocio.entidade.Contato;
 import negocio.entidade.Funcionario;
+import negocio.excecao.cliente.DadosInvalidosException;
+import negocio.excecao.cliente.contato.ContatoInvalidoException;
+import negocio.excecao.cliente.funcionario.FuncionarioJaCadastradoException;
+import negocio.excecao.cliente.funcionario.GerenteJaCadastradoException;
 
 /**
  * Esta classe manipula? e armazena objetos do tipo cliente.
@@ -399,7 +404,63 @@ public class RepositorioCliente implements IRepositorioCliente, Serializable{
     }
 
     public static void main(String[] args) {
-        RepositorioCliente teste = new RepositorioCliente();
+            Contato cont = new Contato("55555555555", "55555555555", "basd123@gmail.com");
+            Funcionario func = new Funcionario("Joazim Silva" , "55555555555" , cont ,"123321", 850.0, false);
+            FachadaGerente.getInstance().getFachadaGerente().getRepositorioCliente().adicionarFuncionario(func);
+    }
+
+    public int procurarFuncionario(Cliente cliente){
+        Connection conexao = ConnectionFactory.getConnection();
+        PreparedStatement stmt = null;
+        try{
+            stmt = conexao.prepareStatement("SELECT * FROM funcionario WHERE cpf = ? ");
+            stmt.setString(1,cliente.getCpf());
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                if (rs.getInt("ativo") == 1) {
+                    return 1;
+                }
+            }
+        }catch (SQLException e){
+            e.getMessage();
+            e.printStackTrace();
+        }finally {
+            ConnectionFactory.closeConnection(conexao,stmt);
+        }
+        return -1;
+    }
+
+    public void adicionarFuncionario(Funcionario func){
+        Connection conexao = ConnectionFactory.getConnection();
+        PreparedStatement stmt = null;
+
+        try {
+            stmt = conexao.prepareStatement("INSERT INTO contato VALUES (?, ?, ?)");
+            stmt.setString(1, func.getContato().getTelefonePrincipal());
+            stmt.setString(2, func.getContato().getTelefoneAlternativo());
+            stmt.setString(3, func.getContato().getEmail());
+
+            stmt.executeUpdate();
+
+            stmt = conexao.prepareStatement("INSERT INTO funcionario VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+            stmt.setDouble(1, func.getSalarioComBonificacao());
+            stmt.setBoolean(2, func.getFuncDoMes());
+            stmt.setDouble(3, func.getSalario());
+            stmt.setBoolean(4, func.getCargoGerente());
+            stmt.setString(5, func.getNome());
+            stmt.setString(6, func.getCpf());
+//            stmt.setBoolean(6, func.getFiel());
+//            stmt.setBoolean(7, func.getAtivo());
+            stmt.setString(7, func.getSenha());
+            stmt.setString(8, func.getContato().getEmail());
+
+            stmt.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }finally {
+            ConnectionFactory.closeConnection(conexao, stmt);
+        }
 
     }
 }
