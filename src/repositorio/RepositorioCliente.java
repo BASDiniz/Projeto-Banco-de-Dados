@@ -137,6 +137,28 @@ public class RepositorioCliente implements IRepositorioCliente, Serializable{
         return null;
     }
 
+    public Cliente buscarPorCpfFunc(String cpf){
+        Connection conexao = ConnectionFactory.getConnection();
+        PreparedStatement stmt = null;
+        try{
+            stmt = conexao.prepareStatement("SELECT * FROM funcionario func join contato cont on func.contato = cont.email WHERE func.cpf = ?");
+            stmt.setString(1,cpf);
+            ResultSet rs = stmt.executeQuery();
+            if(rs.next()){
+                Contato contatoBD = new Contato (rs.getString("telefone_principal"),rs.getString("telefone_alternativo"),rs.getString("email"));
+                Cliente clienteBD = new Funcionario(rs.getString("nome"),rs.getString("cpf"),contatoBD,rs.getString("senha"),rs.getDouble("salario"),rs.getBoolean("cargo_gerente"));
+                return clienteBD;
+            }
+
+        }catch (SQLException e){
+            e.getMessage();
+            e.printStackTrace();
+        }finally {
+            ConnectionFactory.closeConnection(conexao,stmt);
+        }
+        return null;
+    }
+
     //banco implementado
     @Override
     public ArrayList<Cliente> listarPorNomeCliente(String nome) { // lista cliente com o nome passado // FUNCIONANDO
@@ -378,7 +400,8 @@ public class RepositorioCliente implements IRepositorioCliente, Serializable{
 
     public static void main(String[] args) {
         RepositorioCliente teste = new RepositorioCliente();
-        
+        Cliente cli = teste.buscarPorCpfFunc("11111111111");
+        System.out.println(cli.toString());
     }
 }
 
