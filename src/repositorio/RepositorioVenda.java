@@ -258,21 +258,40 @@ public class RepositorioVenda implements IRepositorioVenda, Serializable {
     }
 
     //M�todo auxiliar que busca os produtos que j� foram vendidos em alguma venda
+    //banco implementado
+    private ArrayList<Produto> buscarProdutosVendidos() {// retorna produtos vendidos // FUNCIONANDO
 
-    private ArrayList<Produto> buscarProdutosVendidos() {
+        ArrayList<Produto> produtos = new ArrayList<Produto>();
+        Connection conexao = ConnectionFactory.getConnection();
+        PreparedStatement stmt = null;
+        try {
+            stmt = conexao.prepareStatement("SELECT * FROM produto WHERE venda != -1");
+            ResultSet rs = stmt.executeQuery();
 
-        ArrayList<Produto> produtosVendidos = new ArrayList<Produto>(); // ArrayList de produtos que foram vendidos
-
-        for(int i = 0; i < this.listaVendas.size(); i++) {
-
-            for(int k = 0; k < this.listaVendas.get(i).getCarrinhoProdutos().size(); k++) {
-
-                if(!produtosVendidos.contains(this.listaVendas.get(i).getCarrinhoProdutos().get(k))) {
-                    produtosVendidos.add(this.listaVendas.get(i).getCarrinhoProdutos().get(k));
-                }
+            while(rs.next()){
+                Produto pro = new Produto(rs.getString("codigo"),rs.getString("tipo_de_roupa"),rs.getString("desc_produto"),rs.getString("faixa_etaria"),rs.getString("genero"),rs.getString("cor"),rs.getString("tamanho"),rs.getString("categoria"),rs.getInt("quantidade"),rs.getDouble("valor_venda"));
+                produtos.add(pro);
             }
+            return produtos;
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            e.printStackTrace();
+        } finally{
+            ConnectionFactory.closeConnection(conexao, stmt);
         }
-        return produtosVendidos;
+        return null;
+//        ArrayList<Produto> produtosVendidos = new ArrayList<Produto>(); // ArrayList de produtos que foram vendidos
+//
+//        for(int i = 0; i < this.listaVendas.size(); i++) {
+//
+//            for(int k = 0; k < this.listaVendas.get(i).getCarrinhoProdutos().size(); k++) {
+//
+//                if(!produtosVendidos.contains(this.listaVendas.get(i).getCarrinhoProdutos().get(k))) {
+//                    produtosVendidos.add(this.listaVendas.get(i).getCarrinhoProdutos().get(k));
+//                }
+//            }
+//        }
+//        return produtosVendidos;
     }
 
     /**
@@ -282,6 +301,7 @@ public class RepositorioVenda implements IRepositorioVenda, Serializable {
      */
     @Override
     public ArrayList<Produto> buscarProdutosMaisVendidos(int mes) {
+
 
         ArrayList<Produto> produtosVendidos = buscarProdutosVendidos();
         ArrayList<Produto> produtosMaisVendidos = new ArrayList<Produto>(); // Produtos mais vendidos do maior pro menor
@@ -329,18 +349,36 @@ public class RepositorioVenda implements IRepositorioVenda, Serializable {
         return produtosMaisVendidos;
     }
 
-
-    public ArrayList<Cliente> buscarClientesComPendencia() {
+    //banco implementado
+    public ArrayList<Cliente> buscarClientesComPendencia() {// retorna clientes com pendencia // FUNCIONANDO
 
         ArrayList<Cliente> clientesPendentes = new ArrayList<Cliente>();
+        RepositorioCliente repCliente = FachadaGerente.getInstance().getFachadaGerente().getRepositorioCliente();
+        Connection conexao = ConnectionFactory.getConnection();
+        PreparedStatement stmt = null;
+        try {
+            stmt = conexao.prepareStatement("SELECT * FROM venda WHERE pagamentoParcelado = true");
+            ResultSet rs = stmt.executeQuery();
 
-        for(int i = 0; i < listaVendas.size(); i++) {
-
-            if(listaVendas.get(i).getPagamenteParcelado() == true) {
-                clientesPendentes.add(listaVendas.get(i).getCliente());
+            while(rs.next()){
+                Cliente cliente = repCliente.buscarPorCpf(rs.getString("cliente"));
+                clientesPendentes.add(cliente);
             }
+            return clientesPendentes;
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            e.printStackTrace();
+        } finally{
+            ConnectionFactory.closeConnection(conexao, stmt);
         }
-        return clientesPendentes;
+        return null;
+
+//        for(int i = 0; i < listaVendas.size(); i++) {
+//
+//            if(listaVendas.get(i).getPagamenteParcelado() == true) {
+//                clientesPendentes.add(listaVendas.get(i).getCliente());
+//            }
+//        }
     }
 
     @Override
@@ -387,6 +425,6 @@ public class RepositorioVenda implements IRepositorioVenda, Serializable {
         RepositorioVenda rep = new RepositorioVenda();
 //        rep.adicionarVenda(v);
 
-        System.out.println(rep.returnAllVendas().get(0));
+        System.out.println(rep.buscarProdutosVendidos().get(0).toString());
     }
 }
