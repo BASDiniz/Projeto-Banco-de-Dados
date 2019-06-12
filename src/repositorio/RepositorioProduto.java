@@ -6,6 +6,7 @@ import negocio.entidade.produto.Produto;
 import interfaces.IRepositorioProduto;
 import negocio.excecao.produto.ProdutoInvalidoException;
 import negocio.excecao.produto.ProdutoJaCadastradoException;
+import negocio.excecao.produto.ProdutoNaoEncontradoException;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -94,18 +95,42 @@ public class RepositorioProduto implements IRepositorioProduto, Serializable {
 
         this.listaProdutos.add(produto);
     }
-    
+
+    //Implementado no banco
     @Override
     public Produto buscarProdutoPorCodigo(String codigo) {
-        
-//        for(int i = 0; i < this.listaProdutos.size(); i++) {
-//
-//            if(this.listaProdutos.get(i).getAtivo() == true) { //////////////////////
-//                if(this.listaProdutos.get(i).getCodigo().equals(codigo)) {
-//                    return this.listaProdutos.get(i);
-//                }
-//            }
-//        }
+        Connection conexao = ConnectionFactory.getConnection();
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        try {
+            stmt = conexao.prepareStatement("SELECT * FROM produto WHERE codigo = ?");
+            stmt.setString(1, codigo);
+            rs = stmt.executeQuery();
+            rs.next();
+
+            if(!rs.isBeforeFirst()){
+                String codigo1 = rs.getString("codigo");
+                String tipoDeRoupa = rs.getString("tipo_de_roupa");
+                String descProduto = rs.getString("desc_produto");
+                String faixaEtaria = rs.getString("faixa_etaria");
+                String genero = rs.getString("genero");
+                Integer quantidade = rs.getInt("quantidade");
+                String cor = rs.getString("cor");
+                Boolean ativo = rs.getBoolean("ativo");
+                String categoria = rs.getString("categoria");
+                String tamanho = rs.getString("tamanho");
+                Double valorVenda = rs.getDouble("valor_venda");
+                Produto produtoBanco = new Produto(codigo1, tipoDeRoupa, descProduto, faixaEtaria, genero, cor, tamanho, categoria, quantidade, valorVenda);
+                produtoBanco.setAtivo(ativo);
+
+                return produtoBanco;
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }finally {
+            ConnectionFactory.closeConnection(conexao, stmt);
+        }
         return null;
     }
     
@@ -229,13 +254,16 @@ public class RepositorioProduto implements IRepositorioProduto, Serializable {
     }
 
     public static void main(String[] args){
-        try {
-            FachadaGerente.getInstance().getFachadaGerente().adicionarProduto("12345", "saia", "Calça azul com verde", "juvenil", "masculino", "azul", "p", "dormir", 20, 245.50);
-        } catch (ProdutoInvalidoException e) {
-            e.printStackTrace();
-        } catch (ProdutoJaCadastradoException e) {
-            e.printStackTrace();
-        }
+//        try {
+//            FachadaGerente.getInstance().getFachadaGerente().adicionarProduto("12345", "saia", "Calça azul com verde", "juvenil", "masculino", "azul", "p", "dormir", 20, 245.50);
+//            System.out.println(FachadaGerente.getInstance().getFachadaGerente().buscarProdutoPorCodigo("12345"));
+//        } catch (ProdutoInvalidoException e) {
+//            e.printStackTrace();
+//        } catch (ProdutoJaCadastradoException e) {
+//            e.printStackTrace();
+//        } catch (ProdutoNaoEncontradoException e) {
+//            e.printStackTrace();
+//        }
     }
     
 }
